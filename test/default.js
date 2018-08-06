@@ -22,7 +22,7 @@ test('Parse English.nlf', t => {
   t.deepEqual(actual, expected);
 });
 
-test('Stringify English.nlf', t => {
+test('Stringify English.json', t => {
   const actual = NLF.stringify(JSON.parse(languageJSON));
   const expected = languageFile;
 
