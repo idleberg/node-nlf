@@ -83,6 +83,7 @@ var stringify = function (input, startEditing) {
                 output += "\n# " + key + "\n" + input.strings[key];
             }
         }
+        output += '\n';
     }
     catch (e) {
         throw e;

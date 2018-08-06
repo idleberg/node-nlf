@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project ./",
-    "precommit": "npm run test",
-    "test": "tslint --project ."
+    "lint": "tslint --project .",
+    "precommit": "npm run lint",
+    "test": "npm run lint && npx ava ./test/default.js --verbose"
   },
   "main": "dist/index.js",
   "repository": {

@@ -74,6 +74,7 @@ const stringify = (input: NSISLanguageObject, startEditing: boolean = true): str
         output += `\n# ${key}\n${input.strings[key]}`;
       }
     }
+    output += '\n';
   } catch (e) {
     throw e;
   }
