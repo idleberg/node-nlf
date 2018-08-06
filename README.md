@@ -1,9 +1,9 @@
 # nlf
 
-[![npm](https://img.shields.io/npm/l/@nsis/nlf.svg?style=flat-square)](https://www.npmjs.org/package/@nsis/nlf)
-[![npm](https://img.shields.io/npm/v/@nsis/nlf.svg?style=flat-square)](https://www.npmjs.org/package/@nsis/nlf)
-[![CircleCI](https://img.shields.io/circleci/project/idleberg/node-nlf.svg?style=flat-square)](https://circleci.com/gh/idleberg/node-nlf)
-[![David](https://img.shields.io/david/dev/idleberg/node-nlf.svg?style=flat-square)](https://david-dm.org/idleberg/node-nlf?type=dev)
+[![npm](https://flat.badgen.net/npm/license/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
+[![npm](https://flat.badgen.net/npm/v/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
+[![CircleCI](https://flat.badgen.net/circleci/github/idleberg/node-nlf)](https://circleci.com/gh/idleberg/node-nlf)
+[![David](https://flat.badgen.net/david/dev/idleberg/node-nlf)](https://david-dm.org/idleberg/node-nlf?type=dev)
 
 Parser and stringifier for NSIS Language Files (.nlf)
 
