@@ -2,7 +2,6 @@
 
 [![npm](https://img.shields.io/npm/l/@nsis/nlf.svg?style=flat-square)](https://www.npmjs.org/package/@nsis/nlf)
 [![npm](https://img.shields.io/npm/v/@nsis/nlf.svg?style=flat-square)](https://www.npmjs.org/package/@nsis/nlf)
-[![Travis](https://img.shields.io/travis/idleberg/node-nlf.svg?style=flat-square)](https://travis-ci.org/idleberg/node-nlf)
 [![CircleCI](https://img.shields.io/circleci/project/idleberg/node-nlf.svg?style=flat-square)](https://circleci.com/gh/idleberg/node-nlf)
 [![David](https://img.shields.io/david/dev/idleberg/node-nlf.svg?style=flat-square)](https://david-dm.org/idleberg/node-nlf?type=dev)
 
