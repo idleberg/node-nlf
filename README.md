@@ -1,4 +1,4 @@
-# makensis
+# nlf
 
 [![npm](https://img.shields.io/npm/l/@nsis/nlf.svg?style=flat-square)](https://www.npmjs.org/package/@nsis/nlf)
 [![npm](https://img.shields.io/npm/v/@nsis/nlf.svg?style=flat-square)](https://www.npmjs.org/package/@nsis/nlf)
