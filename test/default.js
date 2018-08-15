@@ -12,62 +12,62 @@ const japaneseFile = readFileSync(join(__dirname, '/fixtures/Japanese.nlf'), 'ut
 const japaneseJSON = readFileSync(join(__dirname, '/fixtures/Japanese.json'), 'utf8');
 
 // Let's run the tests
-test('Convert Arabic.nlf', t => {
+test('Arabic: Convert', t => {
   const expected = arabicFile;
   const actual = NLF.stringify(NLF.parse(expected), false);
 
   t.is(actual.trim(), expected.trim());
 });
 
-test('Parse Arabic.nlf', t => {
+test('Arabic: Parse', t => {
   const actual = NLF.parse(arabicFile);
   const expected = JSON.parse(arabicJSON);
 
   t.deepEqual(actual, expected);
 });
 
-test('Stringify Arabic.json', t => {
+test('Arabic: Stringify', t => {
   const actual = NLF.stringify(JSON.parse(arabicJSON), false);
   const expected = arabicFile;
 
   t.is(actual.trim(), expected.trim());
 });
 
-test('Convert Japanese.nlf', t => {
+test('Japanese: Convert', t => {
   const expected = japaneseFile;
   const actual = NLF.stringify(NLF.parse(expected), false);
 
   t.is(actual.trim(), expected.trim());
 });
 
-test('Parse Japanese.nlf', t => {
+test('Japanese: Parse', t => {
   const actual = NLF.parse(japaneseFile);
   const expected = JSON.parse(japaneseJSON);
 
   t.deepEqual(actual, expected);
 });
 
-test('Stringify Japanese.json', t => {
+test('Japanese: Stringify', t => {
   const actual = NLF.stringify(JSON.parse(japaneseJSON), false);
   const expected = japaneseFile;
 
   t.is(actual.trim(), expected.trim());
 });
-test('Convert English.nlf', t => {
+test('English: Convert', t => {
   const expected = englishFile;
   const actual = NLF.stringify(NLF.parse(expected));
 
   t.is(actual.trim(), expected.trim());
 });
 
-test('Parse English.nlf', t => {
+test('English: Parse', t => {
   const actual = NLF.parse(englishFile);
   const expected = JSON.parse(englishJSON);
 
   t.deepEqual(actual, expected);
 });
 
-test('Stringify English.json', t => {
+test('English: Stringify', t => {
   const actual = NLF.stringify(JSON.parse(englishJSON));
   const expected = englishFile;
 
