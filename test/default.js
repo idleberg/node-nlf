@@ -53,6 +53,7 @@ test('Japanese: Stringify', t => {
 
   t.is(actual.trim(), expected.trim());
 });
+
 test('English: Convert', t => {
   const expected = englishFile;
   const actual = NLF.stringify(NLF.parse(expected));
