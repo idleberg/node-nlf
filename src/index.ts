@@ -1,45 +1,52 @@
+import NLFStrings from './strings.js';
+
 const parse = (input: string): Object => {
   const output: NSISLanguageObject = {
-    codepage: null,
-    credits: [],
+    header: '',
+    id: 0,
     font: {
       name: null,
       size: null
     },
-    header: '',
-    id: 0,
+    codepage: null,
     rtl: false,
     strings: {},
   };
   let strings: any = {};
-  const lines: Array<string> = input.trim().split(/\r?\n/);
-  let credit = [];
 
   try {
-    lines.forEach( (line, index) => {
-      if (line === '# Start editing here') {
-        return;
-      } else if (line.match(/#\s*Header, don\'t edit/)) {
-        output.header = lines[index + 1];
-      } else if (line.match(/#\s*Language ID/)) {
-        output.id = parseInt(lines[index + 1]);
-      } else if (line.match(/#\s*Font and size/)) {
-        output.font = {
-          name: (lines[index + 1] === '-') ? null : lines[index + 1],
-          size: (lines[index + 2] === '-') ? null : parseInt(lines[index + 2])
-        };
-      } else if (line.match(/#\s*Codepage/)) {
-        output.codepage = (lines[index + 1] === '-') ? null : parseInt(lines[index + 1]);
-      } else if (line.match(/#\s*RTL/)) {
-        output.rtl = (lines[index + 1].toUpperCase() === 'RTL') ? true : false;
-      } else if (line.match(/^#\s*Translat/)) {
-        output.credits.push(line);
-      } else if (line.match(/^#\s*\^?(Branding|SetupCaption|UninstallCaption|LicenseSubCaption|ComponentsSubCaption|DirSubCaption|InstallingSubCaption|CompletedSubCaption|UnComponentsSubCaption|UnDirSubCaption|ConfirmSubCaption|UninstallingSubCaption|UnCompletedSubCaption|BackBtn|NextBtn|AgreeBtn|AcceptBtn|DontAcceptBtn|InstallBtn|UninstallBtn|CancelBtn|CloseBtn|BrowseBtn|ShowDetailsBtn|ClickNext|ClickInstall|ClickUninstall|Name|Completed|LicenseText|LicenseTextCB|LicenseTextRB|UnLicenseText|UnLicenseTextCB|UnLicenseTextRB|Custom|ComponentsText|ComponentsSubText1|ComponentsSubText2_NoInstTypes|ComponentsSubText2|UnComponentsText|UnComponentsSubText1|UnComponentsSubText2_NoInstTypes|UnComponentsSubText2|DirText|DirSubText|DirBrowseText|UnDirText|UnDirSubText|UnDirBrowseText|SpaceAvailable|SpaceRequired|UninstallingText|UninstallingSubText|FileError|FileError_NoIgnore|CantWrite|CopyFailed|CopyTo|Registering|Unregistering|SymbolNotFound|CouldNotLoad|CreateFolder|CreateShortcut|CreatedUninstaller|Delete|DeleteOnReboot|ErrorCreatingShortcut|ErrorCreating|ErrorDecompressing|ErrorRegistering|ExecShell|Exec|Extract|ErrorWriting|InvalidOpcode|NoOLE|OutputFolder|RemoveFolder|RenameOnReboot|Rename|Skipped|CopyDetails|LogInstall|Byte|Kilo|Mega|Giga)/i)) {
-        let langString = line.replace('^', '').replace(/^#\s*/, '');
-        strings[langString] = lines[index + 1];
-      }
+    // remove all comments
+    input = input.replace(/^#.*(\r?\n|$)/mg, '').trim();
 
-      output.strings = strings;
+    // split into liens
+    const lines: Array<string> = input.split(/\r?\n/);
+    lines.shift();
+
+    lines.forEach((line, index) => {
+      let key = NLFStrings[index];
+      if (key.startsWith('^')) {
+        key = key.replace('^', '');
+        output.strings[key] = lines[index];
+      } else {
+        switch (key) {
+          case 'id':
+          case 'codepage':
+            output[key] = (lines[index] === '-') ? null : parseInt(lines[index]);
+            break;
+          case 'font':
+            output.font.name = (lines[index] === '-') ? null : lines[index];
+            break;
+          case 'fontsize':
+            output.font.size = (lines[index] === '-') ? null : parseInt(lines[index]);
+            break;
+          case 'rtl':
+            output[key] = (lines[index].toUpperCase() === 'RTL') ? true : false;
+            break;
+          default:
+            output[key] = lines[index];
+            break;
+        }
+      }
     });
   } catch (e) {
     throw e;
@@ -48,12 +55,11 @@ const parse = (input: string): Object => {
   return output;
 };
 
-const stringify = (input: NSISLanguageObject, startEditing: boolean = true): string => {
+const stringify = (input: NSISLanguageObject): string => {
   let output: string = '';
 
   try {
     output += `# Header, don't edit\n${input.header}`;
-    if (startEditing) output += `\n# Start editing here`;
     output += `\n# Language ID\n${input.id}`;
     output += `\n# Font and size - dash (-) means default`;
     output += (input.font.name === null) ? '\n-' : `\n${input.font.name}`;
@@ -62,9 +68,6 @@ const stringify = (input: NSISLanguageObject, startEditing: boolean = true): str
     output += (input.codepage === null) ? '\n-' : `\n${input.codepage}`;
     output += `\n# RTL - anything else than RTL means LTR`;
     output += (input.rtl === true) ? '\nRTL' : '\n-';
-    input.credits.forEach( credit => {
-      output += `\n${credit}`;
-    });
     for (let key in input.strings) {
       if (input.strings.hasOwnProperty(key)) {
         output += `\n# ^${key}\n${input.strings[key]}`;

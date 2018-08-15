@@ -1,6 +1,5 @@
 interface NSISLanguageObject {
   codepage: null|number;
-  credits?: Array<string>;
   font: FontSettings;
   header: string;
   id: number;
