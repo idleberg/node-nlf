@@ -23,10 +23,12 @@ var parse = function (input) {
         lines_1.forEach(function (line, index) {
             var key = strings_js_1.default[index];
             if (key.startsWith('^')) {
+                // Language String
                 key = key.replace('^', '');
                 output.strings[key] = lines_1[index];
             }
             else {
+                // Meta Data
                 switch (key) {
                     case 'id':
                     case 'codepage':
