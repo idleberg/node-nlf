@@ -42,11 +42,10 @@ var parse = function (input) {
             else if (line.match(/^#\s*Translat/)) {
                 output.credits.push(line);
             }
-            else if (line.match(/^#\s*\^/)) {
-                var langString = line.replace(/^#\s*/, '');
+            else if (line.match(/^#\s*\^?(Branding|SetupCaption|UninstallCaption|LicenseSubCaption|ComponentsSubCaption|DirSubCaption|InstallingSubCaption|CompletedSubCaption|UnComponentsSubCaption|UnDirSubCaption|ConfirmSubCaption|UninstallingSubCaption|UnCompletedSubCaption|BackBtn|NextBtn|AgreeBtn|AcceptBtn|DontAcceptBtn|InstallBtn|UninstallBtn|CancelBtn|CloseBtn|BrowseBtn|ShowDetailsBtn|ClickNext|ClickInstall|ClickUninstall|Name|Completed|LicenseText|LicenseTextCB|LicenseTextRB|UnLicenseText|UnLicenseTextCB|UnLicenseTextRB|Custom|ComponentsText|ComponentsSubText1|ComponentsSubText2_NoInstTypes|ComponentsSubText2|UnComponentsText|UnComponentsSubText1|UnComponentsSubText2_NoInstTypes|UnComponentsSubText2|DirText|DirSubText|DirBrowseText|UnDirText|UnDirSubText|UnDirBrowseText|SpaceAvailable|SpaceRequired|UninstallingText|UninstallingSubText|FileError|FileError_NoIgnore|CantWrite|CopyFailed|CopyTo|Registering|Unregistering|SymbolNotFound|CouldNotLoad|CreateFolder|CreateShortcut|CreatedUninstaller|Delete|DeleteOnReboot|ErrorCreatingShortcut|ErrorCreating|ErrorDecompressing|ErrorRegistering|ExecShell|Exec|Extract|ErrorWriting|InvalidOpcode|NoOLE|OutputFolder|RemoveFolder|RenameOnReboot|Rename|Skipped|CopyDetails|LogInstall|Byte|Kilo|Mega|Giga)/i)) {
+                var langString = line.replace('^', '').replace(/^#\s*/, '');
                 strings[langString] = lines[index + 1];
             }
-            // output.credits = credit;
             output.strings = strings;
         });
     }
@@ -76,7 +75,7 @@ var stringify = function (input, startEditing) {
         });
         for (var key in input.strings) {
             if (input.strings.hasOwnProperty(key)) {
-                output += "\n# " + key + "\n" + input.strings[key];
+                output += "\n# ^" + key + "\n" + input.strings[key];
             }
         }
         output += '\n';
