@@ -27,7 +27,7 @@ Example usage in script:
 
 ```js
 // Read an NSIS Language File
-const languageFile = fs.readFileSync('Contrib/Languages/English.nlf');
+const languageFile = fs.readFileSync('Contrib/Languages/English.nlf', 'utf8');
 
 const languageObj = NLF.parse(languageFile);
 const languageNew = NLF.stringify(languageObj);
