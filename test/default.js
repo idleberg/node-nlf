@@ -16,6 +16,8 @@ const koreanFile = readFileSync(join(__dirname, '/fixtures/Korean.nlf'), 'utf8')
 const koreanJSON = readFileSync(join(__dirname, '/fixtures/Korean.json'), 'utf8');
 const japaneseFile = readFileSync(join(__dirname, '/fixtures/Japanese.nlf'), 'utf8');
 const japaneseJSON = readFileSync(join(__dirname, '/fixtures/Japanese.json'), 'utf8');
+const russianFile = readFileSync(join(__dirname, '/fixtures/Russian.nlf'), 'utf8');
+const russianJSON = readFileSync(join(__dirname, '/fixtures/Russian.json'), 'utf8');
 const thaiFile = readFileSync(join(__dirname, '/fixtures/Thai.nlf'), 'utf8');
 const thaiJSON = readFileSync(join(__dirname, '/fixtures/Thai.json'), 'utf8');
 
@@ -121,6 +123,27 @@ test('Japanese: Parse', t => {
 test('Japanese: Stringify', t => {
   const actual = NLF.stringify(JSON.parse(japaneseJSON), false);
   const expected = japaneseFile;
+
+  t.is(actual.trim(), expected.trim());
+});
+
+test('Russian: Convert', t => {
+  const expected = russianFile;
+  const actual = NLF.stringify(NLF.parse(expected), false);
+
+  t.is(actual.trim(), expected.trim());
+});
+
+test('Russian: Parse', t => {
+  const actual = NLF.parse(russianFile);
+  const expected = JSON.parse(russianJSON);
+
+  t.deepEqual(actual, expected);
+});
+
+test('Russian: Stringify', t => {
+  const actual = NLF.stringify(JSON.parse(russianJSON), false);
+  const expected = russianFile;
 
   t.is(actual.trim(), expected.trim());
 });
