@@ -13,6 +13,7 @@ const parse = (input: string): Object => {
   };
   let strings: any = {};
   const lines: Array<string> = input.trim().split(/\r?\n/);
+  let credit = [];
 
   try {
     lines.forEach( (line, index) => {
@@ -32,12 +33,7 @@ const parse = (input: string): Object => {
       } else if (line.match(/#\s*RTL/)) {
         output.rtl = (lines[index + 1].toUpperCase() === 'RTL') ? true : false;
       } else if (line.match(/^#\s*Translat/)) {
-        let credit = [];
-        for (let i = index; i < lines.length; i++) {
-          if (lines[i].match(/^#\s*\^/)) break;
-          credit.push(lines[i]);
-        }
-        output.credits = credit;
+        output.credits.push(line);
       } else if (line.match(/^#\s*\^/)) {
         let langString = line.replace(/^#\s*/, '');
         strings[langString] = lines[index + 1];

@@ -15,6 +15,7 @@ var parse = function (input) {
     };
     var strings = {};
     var lines = input.trim().split(/\r?\n/);
+    var credit = [];
     try {
         lines.forEach(function (line, index) {
             if (line === '# Start editing here') {
@@ -39,18 +40,13 @@ var parse = function (input) {
                 output.rtl = (lines[index + 1].toUpperCase() === 'RTL') ? true : false;
             }
             else if (line.match(/^#\s*Translat/)) {
-                var credit = [];
-                for (var i = index; i < lines.length; i++) {
-                    if (lines[i].match(/^#\s*\^/))
-                        break;
-                    credit.push(lines[i]);
-                }
-                output.credits = credit;
+                output.credits.push(line);
             }
             else if (line.match(/^#\s*\^/)) {
                 var langString = line.replace(/^#\s*/, '');
                 strings[langString] = lines[index + 1];
             }
+            // output.credits = credit;
             output.strings = strings;
         });
     }
