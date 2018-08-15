@@ -23,148 +23,50 @@ const thaiJSON = readFileSync(join(__dirname, '/fixtures/Thai.json'), 'utf8');
 
 // Let's run the tests
 test('Arabic: Convert', t => {
-  const expected = arabicFile;
-  const actual = NLF.stringify(NLF.parse(expected), false);
-
-  t.is(actual.trim(), expected.trim());
-});
-
-test('Arabic: Parse', t => {
-  const actual = NLF.parse(arabicFile);
   const expected = JSON.parse(arabicJSON);
+  const actual = NLF.parse(arabicFile);
 
   t.deepEqual(actual, expected);
-});
-
-test('Arabic: Stringify', t => {
-  const actual = NLF.stringify(JSON.parse(arabicJSON), false);
-  const expected = arabicFile;
-
-  t.is(actual.trim(), expected.trim());
 });
 
 test('English: Convert', t => {
-  const expected = englishFile;
-  const actual = NLF.stringify(NLF.parse(expected));
-
-  t.is(actual.trim(), expected.trim());
-});
-
-test('English: Parse', t => {
-  const actual = NLF.parse(englishFile);
   const expected = JSON.parse(englishJSON);
+  const actual = NLF.parse(englishFile);
 
-  t.deepEqual(actual, expected);
-});
-
-test('English: Stringify', t => {
-  const actual = NLF.stringify(JSON.parse(englishJSON));
-  const expected = englishFile;
-
-  t.is(actual.trim(), expected.trim());
+   t.deepEqual(actual, expected);
 });
 
 test('Farsi: Convert', t => {
-  const expected = farsiFile;
-  const actual = NLF.stringify(NLF.parse(expected));
-
-  t.is(actual.trim(), expected.trim());
-});
-
-test('Farsi: Parse', t => {
-  const actual = NLF.parse(farsiFile);
   const expected = JSON.parse(farsiJSON);
+  const actual = NLF.parse(farsiFile);
 
-  t.deepEqual(actual, expected);
-});
-
-test('Farsi: Stringify', t => {
-  const actual = NLF.stringify(JSON.parse(farsiJSON));
-  const expected = farsiFile;
-
-  t.is(actual.trim(), expected.trim());
+   t.deepEqual(actual, expected);
 });
 
 test('Greek: Convert', t => {
-  const expected = greekFile;
-  const actual = NLF.stringify(NLF.parse(expected), false);
-
-  t.is(actual.trim(), expected.trim());
-});
-
-test('Greek: Parse', t => {
-  const actual = NLF.parse(greekFile);
   const expected = JSON.parse(greekJSON);
+  const actual = NLF.parse(greekFile);
 
-  t.deepEqual(actual, expected);
-});
-
-test('Greek: Stringify', t => {
-  const actual = NLF.stringify(JSON.parse(greekJSON), false);
-  const expected = greekFile;
-
-  t.is(actual.trim(), expected.trim());
+   t.deepEqual(actual, expected);
 });
 
 test('Japanese: Convert', t => {
-  const expected = japaneseFile;
-  const actual = NLF.stringify(NLF.parse(expected), false);
-
-  t.is(actual.trim(), expected.trim());
-});
-
-test('Japanese: Parse', t => {
-  const actual = NLF.parse(japaneseFile);
   const expected = JSON.parse(japaneseJSON);
+  const actual = NLF.parse(japaneseFile);
 
-  t.deepEqual(actual, expected);
-});
-
-test('Japanese: Stringify', t => {
-  const actual = NLF.stringify(JSON.parse(japaneseJSON), false);
-  const expected = japaneseFile;
-
-  t.is(actual.trim(), expected.trim());
+   t.deepEqual(actual, expected);
 });
 
 test('Russian: Convert', t => {
-  const expected = russianFile;
-  const actual = NLF.stringify(NLF.parse(expected), false);
-
-  t.is(actual.trim(), expected.trim());
-});
-
-test('Russian: Parse', t => {
-  const actual = NLF.parse(russianFile);
   const expected = JSON.parse(russianJSON);
+  const actual = NLF.parse(russianFile);
 
-  t.deepEqual(actual, expected);
-});
-
-test('Russian: Stringify', t => {
-  const actual = NLF.stringify(JSON.parse(russianJSON), false);
-  const expected = russianFile;
-
-  t.is(actual.trim(), expected.trim());
+   t.deepEqual(actual, expected);
 });
 
 test('Thai: Convert', t => {
-  const expected = thaiFile;
-  const actual = NLF.stringify(NLF.parse(expected));
-
-  t.is(actual.trim(), expected.trim());
-});
-
-test('Thai: Parse', t => {
-  const actual = NLF.parse(thaiFile);
   const expected = JSON.parse(thaiJSON);
+  const actual = NLF.parse(thaiFile);
 
-  t.deepEqual(actual, expected);
-});
-
-test('Thai: Stringify', t => {
-  const actual = NLF.stringify(JSON.parse(thaiJSON));
-  const expected = thaiFile;
-
-  t.is(actual.trim(), expected.trim());
+   t.deepEqual(actual, expected);
 });

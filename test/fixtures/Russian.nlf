@@ -1,4 +1,4 @@
-# Header, don't edit
+﻿# Header, don't edit
 NLF v6
 # Language ID
 1049
@@ -181,11 +181,11 @@ Nullsoft Install System %s
 Копировать сведения в буфер обмена 
 # ^LogInstall
 Вести отчет установки
-# ^Byte
+# byte
 байт
-# ^Kilo
+# kilo
  К
-# ^Mega
+# mega
  М
-# ^Giga
+# giga
  Г

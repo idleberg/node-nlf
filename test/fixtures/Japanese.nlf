@@ -1,4 +1,4 @@
-# Header, don't edit
+﻿# Header, don't edit
 NLF v6
 # Language ID
 1041
@@ -30,7 +30,7 @@ $(^Name) アンインストール
 : アンインストール オプション
 # ^UnDirSubCaption
 : アンインストール フォルダ
-# ^ConfirmSubCaption
+# ^ComfirmSubCaption
 ：確認
 # ^UninstallingSubCaption
 ：アンインストール
