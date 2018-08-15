@@ -25,9 +25,11 @@ const parse = (input: string): Object => {
     lines.forEach((line, index) => {
       let key = NLFStrings[index];
       if (key.startsWith('^')) {
+        // Language String
         key = key.replace('^', '');
         output.strings[key] = lines[index];
       } else {
+        // Meta Data
         switch (key) {
           case 'id':
           case 'codepage':
