@@ -16,6 +16,8 @@ glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
       let jsonFile = readFileSync(jsonPath, 'utf8');
 
       const nlfString = NLF.stringify(JSON.parse(jsonFile));
+
+      // Remove comments and normalize line endings
       const expected = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
       const actual = nlfFile.trim().replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
 
