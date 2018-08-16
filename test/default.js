@@ -1,72 +1,25 @@
 // Dependencies
 import * as NLF from '../dist';
-import { join } from 'path';
+import { basename, dirname, join } from 'path';
 import { readFileSync } from 'fs';
+import glob from 'glob';
 import test from 'ava';
 
-const arabicFile = readFileSync(join(__dirname, '/fixtures/Arabic.nlf'), 'utf8');
-const arabicJSON = readFileSync(join(__dirname, '/fixtures/Arabic.json'), 'utf8');
-const englishFile = readFileSync(join(__dirname, '/fixtures/English.nlf'), 'utf8');
-const englishJSON = readFileSync(join(__dirname, '/fixtures/English.json'), 'utf8');
-const farsiFile = readFileSync(join(__dirname, '/fixtures/Farsi.nlf'), 'utf8');
-const farsiJSON = readFileSync(join(__dirname, '/fixtures/Farsi.json'), 'utf8');
-const greekFile = readFileSync(join(__dirname, '/fixtures/Greek.nlf'), 'utf8');
-const greekJSON = readFileSync(join(__dirname, '/fixtures/Greek.json'), 'utf8');
-const koreanFile = readFileSync(join(__dirname, '/fixtures/Korean.nlf'), 'utf8');
-const koreanJSON = readFileSync(join(__dirname, '/fixtures/Korean.json'), 'utf8');
-const japaneseFile = readFileSync(join(__dirname, '/fixtures/Japanese.nlf'), 'utf8');
-const japaneseJSON = readFileSync(join(__dirname, '/fixtures/Japanese.json'), 'utf8');
-const russianFile = readFileSync(join(__dirname, '/fixtures/Russian.nlf'), 'utf8');
-const russianJSON = readFileSync(join(__dirname, '/fixtures/Russian.json'), 'utf8');
-const thaiFile = readFileSync(join(__dirname, '/fixtures/Thai.nlf'), 'utf8');
-const thaiJSON = readFileSync(join(__dirname, '/fixtures/Thai.json'), 'utf8');
+glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
+  files.forEach((file) => {
+    let fileDir = dirname(file);
+    let fileBase = basename(file, '.nlf');
 
-// Let's run the tests
-test('Arabic.nlf', t => {
-  const expected = JSON.parse(arabicJSON);
-  const actual = NLF.parse(arabicFile);
+    test(basename(file), t => {
+      let nlfFile = readFileSync(file, 'utf8');
+      let jsonPath = join(fileDir, fileBase + '.json');
+      let jsonFile = readFileSync(jsonPath, 'utf8');
 
-  t.deepEqual(actual, expected);
-});
+      const nlfString = NLF.stringify(JSON.parse(jsonFile));
+      const expected = nlfString.replace(/^#.*(\r?\n|$)/mg, '').trim();
+      const actual = nlfFile.trim().replace(/^#.*(\r?\n|$)/mg, '');
 
-test('English.nlf', t => {
-  const expected = JSON.parse(englishJSON);
-  const actual = NLF.parse(englishFile);
-
-   t.deepEqual(actual, expected);
-});
-
-test('Farsi.nlf', t => {
-  const expected = JSON.parse(farsiJSON);
-  const actual = NLF.parse(farsiFile);
-
-   t.deepEqual(actual, expected);
-});
-
-test('Greek.nlf', t => {
-  const expected = JSON.parse(greekJSON);
-  const actual = NLF.parse(greekFile);
-
-   t.deepEqual(actual, expected);
-});
-
-test('Japanese.nlf', t => {
-  const expected = JSON.parse(japaneseJSON);
-  const actual = NLF.parse(japaneseFile);
-
-   t.deepEqual(actual, expected);
-});
-
-test('Russian.nlf', t => {
-  const expected = JSON.parse(russianJSON);
-  const actual = NLF.parse(russianFile);
-
-   t.deepEqual(actual, expected);
-});
-
-test('Thai.nlf', t => {
-  const expected = JSON.parse(thaiJSON);
-  const actual = NLF.parse(thaiFile);
-
-   t.deepEqual(actual, expected);
+      t.is(expected, actual);
+    });
+  });
 });
