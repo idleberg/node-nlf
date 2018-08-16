@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var strings_js_1 = require("./strings.js");
+var enum_js_1 = require("./enum.js");
 /**
  * Parses an NSIS language file string
  * @param {string} input - NLF string
@@ -25,7 +25,7 @@ var parse = function (input) {
         // split into lines
         var lines_1 = input.split(/\r?\n/);
         lines_1.forEach(function (line, index) {
-            var key = strings_js_1.default[index];
+            var key = enum_js_1.default[index];
             if (key.startsWith('^')) {
                 // Language String
                 key = key.replace('^', '');
