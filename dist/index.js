@@ -16,10 +16,9 @@ var parse = function (input) {
     var strings = {};
     try {
         // remove all comments
-        input = input.replace(/^#.*(\r?\n|$)/mg, '').trim();
-        // split into liens
+        input = input.trim().replace(/^#.*(\r?\n|$)/mg, '');
+        // split into lines
         var lines_1 = input.split(/\r?\n/);
-        lines_1.shift();
         lines_1.forEach(function (line, index) {
             var key = strings_js_1.default[index];
             if (key.startsWith('^')) {
@@ -62,8 +61,10 @@ var stringify = function (input) {
         output += "# Header, don't edit\n" + input.header;
         output += "\n# Language ID\n" + input.id;
         output += "\n# Font and size - dash (-) means default";
-        output += (input.font.name === null) ? '\n-' : "\n" + input.font.name;
-        output += (input.font.size === null) ? '\n-' : "\n" + input.font.size;
+        if (typeof input.font !== 'undefined') {
+            output += (input.font.name === null) ? '\n-' : "\n" + input.font.name;
+            output += (input.font.size === null) ? '\n-' : "\n" + input.font.size;
+        }
         output += "\n# Codepage - dash (-) means ASCII code page";
         output += (input.codepage === null) ? '\n-' : "\n" + input.codepage;
         output += "\n# RTL - anything else than RTL means LTR";
@@ -73,7 +74,6 @@ var stringify = function (input) {
                 output += "\n# ^" + key + "\n" + input.strings[key];
             }
         }
-        output += '\n';
     }
     catch (e) {
         throw e;

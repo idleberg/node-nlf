@@ -16,11 +16,10 @@ const parse = (input: string): Object => {
 
   try {
     // remove all comments
-    input = input.replace(/^#.*(\r?\n|$)/mg, '').trim();
+    input = input.trim().replace(/^#.*(\r?\n|$)/mg, '');
 
-    // split into liens
+    // split into lines
     const lines: Array<string> = input.split(/\r?\n/);
-    lines.shift();
 
     lines.forEach((line, index) => {
       let key = NLFStrings[index];
@@ -64,8 +63,10 @@ const stringify = (input: NSISLanguageObject): string => {
     output += `# Header, don't edit\n${input.header}`;
     output += `\n# Language ID\n${input.id}`;
     output += `\n# Font and size - dash (-) means default`;
-    output += (input.font.name === null) ? '\n-' : `\n${input.font.name}`;
-    output += (input.font.size === null) ? '\n-' : `\n${input.font.size}`;
+    if (typeof input.font !== 'undefined') {
+      output += (input.font.name === null) ? '\n-' : `\n${input.font.name}`;
+      output += (input.font.size === null) ? '\n-' : `\n${input.font.size}`;
+    }
     output += `\n# Codepage - dash (-) means ASCII code page`;
     output += (input.codepage === null) ? '\n-' : `\n${input.codepage}`;
     output += `\n# RTL - anything else than RTL means LTR`;
@@ -75,7 +76,6 @@ const stringify = (input: NSISLanguageObject): string => {
         output += `\n# ^${key}\n${input.strings[key]}`;
       }
     }
-    output += '\n';
   } catch (e) {
     throw e;
   }
