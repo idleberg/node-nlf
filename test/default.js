@@ -16,8 +16,8 @@ glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
       let jsonFile = readFileSync(jsonPath, 'utf8');
 
       const nlfString = NLF.stringify(JSON.parse(jsonFile));
-      const expected = nlfString.replace(/^#.*(\r?\n|$)/mg, '').trim();
-      const actual = nlfFile.trim().replace(/^#.*(\r?\n|$)/mg, '');
+      const expected = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
+      const actual = nlfFile.trim().replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
 
       t.is(expected, actual);
     });
