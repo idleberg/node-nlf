@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var strings_js_1 = require("./strings.js");
+/**
+ * Parses an NSIS language file string
+ * @param {string} input - NLF string
+ * @returns {string} - NLF object
+ */
 var parse = function (input) {
     var output = {
         header: '',
@@ -55,6 +60,11 @@ var parse = function (input) {
     return output;
 };
 exports.parse = parse;
+/**
+ * Stringifies an NSIS language file object
+ * @param {Object} input - NLF object
+ * @returns {string} - NLF string
+ */
 var stringify = function (input) {
     var output = '';
     try {

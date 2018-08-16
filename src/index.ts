@@ -1,5 +1,10 @@
 import NLFStrings from './strings.js';
 
+/**
+ * Parses an NSIS language file string
+ * @param {string} input - NLF string
+ * @returns {string} - NLF object
+ */
 const parse = (input: string): Object => {
   const output: NSISLanguageObject = {
     header: '',
@@ -56,6 +61,11 @@ const parse = (input: string): Object => {
   return output;
 };
 
+/**
+ * Stringifies an NSIS language file object
+ * @param {Object} input - NLF object
+ * @returns {string} - NLF string
+ */
 const stringify = (input: NSISLanguageObject): string => {
   let output: string = '';
 
