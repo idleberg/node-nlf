@@ -39,7 +39,7 @@ const languageNew = NLF.stringify(languageObj);
 
 Usage: `parse(string)`
 
-Parses an NSIS Language File, constructing a JSON
+Parses an NSIS Language File, constructing an object that's easy to query
 
 #### stringify
 
