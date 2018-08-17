@@ -3,7 +3,7 @@ import NLFStrings from './enum.js';
 /**
  * Parses an NSIS language file string
  * @param {string} input - NLF string
- * @returns {string} - NLF object
+ * @returns {Object} - NLF object
  */
 const parse = (input: string): Object => {
   const output: NSISLanguageObject = {
