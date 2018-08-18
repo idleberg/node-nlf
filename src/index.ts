@@ -63,27 +63,35 @@ const parse = (input: string): Object => {
 
 /**
  * Stringifies an NSIS language file object
- * @param {Object} input - NLF object
+ * @param {Object|string} input - NLF object
  * @returns {string} - NLF string
  */
-const stringify = (input: NSISLanguageObject): string => {
+const stringify = (input: any): string => {
   let output: string = '';
+  let inputObj: NSISLanguageObject;
+
+  // Convert JSON string to object, if necessary
+  if (isObject(input) === false) {
+    inputObj = JSON.parse(input);
+  } else {
+    inputObj = input;
+  }
 
   try {
-    output += `# Header, don't edit\n${input.header}`;
-    output += `\n# Language ID\n${input.id}`;
+    output += `# Header, don't edit\n${inputObj.header}`;
+    output += `\n# Language ID\n${inputObj.id}`;
     output += `\n# Font and size - dash (-) means default`;
-    if (typeof input.font !== 'undefined') {
-      output += (input.font.name === null) ? '\n-' : `\n${input.font.name}`;
-      output += (input.font.size === null) ? '\n-' : `\n${input.font.size}`;
+    if (typeof inputObj.font !== 'undefined') {
+      output += (inputObj.font.name === null) ? '\n-' : `\n${inputObj.font.name}`;
+      output += (inputObj.font.size === null) ? '\n-' : `\n${inputObj.font.size}`;
     }
     output += `\n# Codepage - dash (-) means ASCII code page`;
-    output += (input.codepage === null) ? '\n-' : `\n${input.codepage}`;
+    output += (inputObj.codepage === null) ? '\n-' : `\n${inputObj.codepage}`;
     output += `\n# RTL - anything else than RTL means LTR`;
-    output += (input.rtl === true) ? '\nRTL' : '\n-';
-    for (let key in input.strings) {
-      if (input.strings.hasOwnProperty(key)) {
-        output += `\n# ^${key}\n${input.strings[key]}`;
+    output += (inputObj.rtl === true) ? '\nRTL' : '\n-';
+    for (let key in inputObj.strings) {
+      if (inputObj.strings.hasOwnProperty(key)) {
+        output += `\n# ^${key}\n${inputObj.strings[key]}`;
       }
     }
   } catch (e) {
@@ -92,5 +100,11 @@ const stringify = (input: NSISLanguageObject): string => {
 
   return output;
 };
+
+
+// Helpers
+function isObject (obj: any): boolean {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}
 
 export { parse, stringify };

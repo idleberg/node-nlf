@@ -10,7 +10,7 @@ glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
     let fileDir = dirname(file);
     let fileBase = basename(file, '.nlf');
 
-    test(basename(file), t => {
+    test(`Object: ${basename(file)}`, t => {
       let nlfFile = readFileSync(file, 'utf8');
       let jsonPath = join(fileDir, fileBase + '.json');
       let jsonFile = readFileSync(jsonPath, 'utf8');
@@ -21,7 +21,21 @@ glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
       const expected = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
       const actual = nlfFile.trim().replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
 
-      t.is(expected, actual);
+      t.is(actual, expected);
+    });
+
+    test(`JSON: ${basename(file)}`, t => {
+      let nlfFile = readFileSync(file, 'utf8');
+      let jsonPath = join(fileDir, fileBase + '.json');
+      let jsonFile = readFileSync(jsonPath, 'utf8');
+
+      const nlfString = NLF.stringify(jsonFile);
+
+      // Remove comments and normalize line endings
+      const expected = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
+      const actual = nlfFile.trim().replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
+
+      t.is(actual, expected);
     });
   });
 });

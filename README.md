@@ -43,9 +43,9 @@ Parses an NSIS Language File, constructing an object that's easy to query
 
 #### stringify
 
-Usage: `stringify(Object)`
+Usage: `stringify(Object|string)`
 
-Converts an NSIS Language File JSON to a `.nlf` string
+Converts an NSIS Language File object or JSON string to an `.nlf` string
 
 ## License
 
