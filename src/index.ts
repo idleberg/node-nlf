@@ -101,10 +101,9 @@ const stringify = (input: any): string => {
   return output;
 };
 
+export { parse, stringify };
 
 // Helpers
 function isObject (obj: any): boolean {
   return Object.prototype.toString.call(obj) === '[object Object]';
 }
-
-export { parse, stringify };
