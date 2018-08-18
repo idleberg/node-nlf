@@ -1,5 +1,5 @@
 interface NSISLanguageObject {
-  codepage: null|number;
+  codepage: null | number;
   font: FontSettings;
   header: string;
   id: number;
@@ -8,6 +8,6 @@ interface NSISLanguageObject {
 }
 
 interface FontSettings {
-  name: null|string;
-  size: null|number;
+  name: null | string;
+  size: null | number;
 }
