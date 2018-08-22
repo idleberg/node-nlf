@@ -2,10 +2,10 @@ import NLFStrings from './enum.js';
 
 /**
  * Parses an NSIS language file string
- * @param {string} input - NLF string
- * @returns {Object} - NLF object
+ * @param input - NLF string
+ * @returns - NLF object
  */
-const parse = (input: string): Object => {
+const parse = (input: string, stringify: boolean = false): Object|string => {
   const output: NSISLanguageObject = {
     header: '',
     id: 0,
@@ -58,13 +58,17 @@ const parse = (input: string): Object => {
     throw e;
   }
 
+  if (stringify === true) {
+    return JSON.stringify(output, null, 2);
+  }
+
   return output;
 };
 
 /**
  * Stringifies an NSIS language file object
- * @param {Object|string} input - NLF object
- * @returns {string} - NLF string
+ * @param input - NLF object
+ * @returns - NLF string
  */
 const stringify = (input: any): string => {
   let output: string = '';

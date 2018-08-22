@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var enum_js_1 = require("./enum.js");
 /**
  * Parses an NSIS language file string
- * @param {string} input - NLF string
- * @returns {string} - NLF object
+ * @param input - NLF string
+ * @returns - NLF object
  */
-var parse = function (input) {
+var parse = function (input, stringify) {
+    if (stringify === void 0) { stringify = false; }
     var output = {
         header: '',
         id: 0,
@@ -57,13 +58,16 @@ var parse = function (input) {
     catch (e) {
         throw e;
     }
+    if (stringify === true) {
+        return JSON.stringify(output, null, 2);
+    }
     return output;
 };
 exports.parse = parse;
 /**
  * Stringifies an NSIS language file object
- * @param {Object|string} input - NLF object
- * @returns {string} - NLF string
+ * @param input - NLF object
+ * @returns - NLF string
  */
 var stringify = function (input) {
     var output = '';
