@@ -5,7 +5,7 @@ import NLFStrings from './enum.js';
  * @param input - NLF string
  * @returns - NLF object
  */
-const parse = (input: string, stringify: boolean = false): Object|string => {
+const parse = (input: string, stringify: boolean = false, minify: boolean = false): Object|string => {
   const output: NSISLanguageObject = {
     header: '',
     id: 0,
@@ -59,7 +59,8 @@ const parse = (input: string, stringify: boolean = false): Object|string => {
   }
 
   if (stringify === true) {
-    return JSON.stringify(output, null, 2);
+    const indentation: number = (minify === true) ? 0 : 2;
+    return JSON.stringify(output, null, indentation);
   }
 
   return output;

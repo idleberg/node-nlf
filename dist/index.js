@@ -6,8 +6,9 @@ var enum_js_1 = require("./enum.js");
  * @param input - NLF string
  * @returns - NLF object
  */
-var parse = function (input, stringify) {
+var parse = function (input, stringify, minify) {
     if (stringify === void 0) { stringify = false; }
+    if (minify === void 0) { minify = false; }
     var output = {
         header: '',
         id: 0,
@@ -59,7 +60,8 @@ var parse = function (input, stringify) {
         throw e;
     }
     if (stringify === true) {
-        return JSON.stringify(output, null, 2);
+        var indentation = (minify === true) ? 0 : 2;
+        return JSON.stringify(output, null, indentation);
     }
     return output;
 };
