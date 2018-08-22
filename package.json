@@ -15,7 +15,9 @@
     "url": "https://github.com/idleberg/node-nlf.git"
   },
   "keywords": [
-    "nsis"
+    "nsis",
+    "nsis language file",
+    "converter"
   ],
   "devDependencies": {
     "@types/node": "^10.5.6",
