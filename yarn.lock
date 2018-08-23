@@ -291,9 +291,9 @@
   dependencies:
     arrify "^1.0.1"
 
-"@types/node@^10.5.6":
-  version "10.5.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.6.tgz#1640f021dd0eaf12e731e54198c12ad2e020dc8e"
+"@types/node@^10.9.0":
+  version "10.9.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.9.0.tgz#d2824d342b1d733e22ef169708bd254924db16bd"
 
 abbrev@1:
   version "1.1.1"
