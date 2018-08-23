@@ -28,7 +28,7 @@ var parse = function (input, stringify, minify) {
         var lines_1 = input.split(/\r?\n/);
         lines_1.forEach(function (line, index) {
             var key = enum_js_1.default[index];
-            if (key.startsWith('^')) {
+            if (typeof key !== 'undefined' && key.startsWith('^')) {
                 // Language String
                 key = key.replace('^', '');
                 output.strings[key] = lines_1[index];

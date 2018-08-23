@@ -28,7 +28,7 @@ const parse = (input: string, stringify: boolean = false, minify: boolean = fals
 
     lines.forEach((line, index) => {
       let key = NLFStrings[index];
-      if (key.startsWith('^')) {
+      if (typeof key !== 'undefined' && key.startsWith('^')) {
         // Language String
         key = key.replace('^', '');
         output.strings[key] = lines[index];
