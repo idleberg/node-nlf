@@ -31,15 +31,27 @@ const languageFile = fs.readFileSync('Contrib/Languages/English.nlf', 'utf8');
 
 const languageObj = NLF.parse(languageFile);
 const languageNew = NLF.stringify(languageObj);
-````
+```
 
 ### Methods
 
 #### parse
 
-Usage: `parse(string, stringify = false, minify = false)`
+Usage: `parse(string, options)`
 
 Parses an NSIS Language File, constructing an object or JSON string that's easy to query
+
+##### options.stringify
+
+Type: `boolean`
+
+Return a stringified object
+
+##### options.minify
+
+Type: `boolean`
+
+Minifies a stringified object, requires `options.stringify` to be `true`
 
 #### stringify
 
