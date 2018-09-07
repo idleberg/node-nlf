@@ -71,7 +71,7 @@ exports.default = {
     v6: [
         'header',
         'id',
-        'font',
+        'fontname',
         'fontsize',
         'codepage',
         'rtl',
