@@ -11,3 +11,8 @@ interface FontSettings {
   name: null | string;
   size: null | number;
 }
+
+interface ParserOptions {
+  minify?: boolean;
+  stringify?: boolean;
+}

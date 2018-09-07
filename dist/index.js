@@ -6,9 +6,8 @@ var enum_js_1 = require("./enum.js");
  * @param input - NLF string
  * @returns - NLF object
  */
-var parse = function (input, stringify, minify) {
-    if (stringify === void 0) { stringify = false; }
-    if (minify === void 0) { minify = false; }
+var parse = function (input, options) {
+    if (options === void 0) { options = {}; }
     var output = {
         header: '',
         id: 0,
@@ -26,8 +25,10 @@ var parse = function (input, stringify, minify) {
         input = input.trim().replace(/^#.*(\r?\n|$)/mg, '');
         // split into lines
         var lines_1 = input.split(/\r?\n/);
+        // get NLF version
+        var version_1 = lines_1[0].match(/\d+$/)[0] || 6;
         lines_1.forEach(function (line, index) {
-            var key = enum_js_1.default[index];
+            var key = enum_js_1.default["v" + version_1][index];
             if (typeof key !== 'undefined' && key.startsWith('^')) {
                 // Language String
                 key = key.replace('^', '');
@@ -40,7 +41,8 @@ var parse = function (input, stringify, minify) {
                     case 'codepage':
                         output[key] = (lines_1[index] === '-') ? null : parseInt(lines_1[index]);
                         break;
-                    case 'font':
+                    case 'font': // backwards compatibility
+                    case 'fontname':
                         output.font.name = (lines_1[index] === '-') ? null : lines_1[index];
                         break;
                     case 'fontsize':
@@ -50,7 +52,9 @@ var parse = function (input, stringify, minify) {
                         output[key] = (lines_1[index].toUpperCase() === 'RTL') ? true : false;
                         break;
                     default:
-                        output[key] = lines_1[index];
+                        if (typeof key !== 'undefined') {
+                            output[key] = lines_1[index];
+                        }
                         break;
                 }
             }
@@ -59,8 +63,8 @@ var parse = function (input, stringify, minify) {
     catch (e) {
         throw e;
     }
-    if (stringify === true) {
-        var indentation = (minify === true) ? 0 : 2;
+    if (options.stringify === true) {
+        var indentation = (options.minify === true) ? 0 : 2;
         return JSON.stringify(output, null, indentation);
     }
     return output;
@@ -81,20 +85,31 @@ var stringify = function (input) {
     else {
         inputObj = input;
     }
+    // get NLF version
+    var version = inputObj.header.match(/\d+$/)[0] || 6;
+
     try {
         output += "# Header, don't edit\n" + inputObj.header;
         output += "\n# Language ID\n" + inputObj.id;
-        output += "\n# Font and size - dash (-) means default";
-        if (typeof inputObj.font !== 'undefined') {
+
+        if (typeof inputObj.font !== 'undefined' && enum_js_1.default["v" + version].includes('font')) {
+            output += "\n# Font and size - dash (-) means default";
             output += (inputObj.font.name === null) ? '\n-' : "\n" + inputObj.font.name;
             output += (inputObj.font.size === null) ? '\n-' : "\n" + inputObj.font.size;
         }
-        output += "\n# Codepage - dash (-) means ASCII code page";
-        output += (inputObj.codepage === null) ? '\n-' : "\n" + inputObj.codepage;
-        output += "\n# RTL - anything else than RTL means LTR";
-        output += (inputObj.rtl === true) ? '\nRTL' : '\n-';
+
+        if (enum_js_1.default["v" + version].includes('codepage')) {
+            output += "\n# Codepage - dash (-) means ASCII code page";
+            output += (inputObj.codepage === null) ? '\n-' : "\n" + inputObj.codepage;
+        }
+
+        if (enum_js_1.default["v" + version].includes('rtl')) {
+            output += "\n# RTL - anything else than RTL means LTR";
+            output += (inputObj.rtl === true) ? '\nRTL' : '\n-';
+        }
+
         for (var key in inputObj.strings) {
-            if (inputObj.strings.hasOwnProperty(key)) {
+            if (inputObj.strings.hasOwnProperty(key) && enum_js_1.default["v" + version].includes("^" + key)) {
                 output += "\n# ^" + key + "\n" + inputObj.strings[key];
             }
         }
