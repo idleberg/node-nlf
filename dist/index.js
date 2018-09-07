@@ -90,7 +90,7 @@ var stringify = function (input) {
     try {
         output += "# Header, don't edit\n" + inputObj.header;
         output += "\n# Language ID\n" + inputObj.id;
-        if (typeof inputObj.font !== 'undefined' && enum_js_1.default["v" + version].includes('font')) {
+        if (typeof inputObj.font !== 'undefined' && enum_js_1.default["v" + version].includes('fontname')) {
             output += "\n# Font and size - dash (-) means default";
             output += (inputObj.font.name === null) ? '\n-' : "\n" + inputObj.font.name;
             output += (inputObj.font.size === null) ? '\n-' : "\n" + inputObj.font.size;
