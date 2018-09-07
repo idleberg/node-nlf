@@ -1,4 +1,4 @@
-import NLFStrings from './enum.js';
+import NLFStrings from './dictionary.js';
 
 /**
  * Parses an NSIS language file string

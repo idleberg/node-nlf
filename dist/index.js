@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var enum_js_1 = require("./enum.js");
+var dictionary_js_1 = require("./dictionary.js");
 /**
  * Parses an NSIS language file string
  * @param input - NLF string
@@ -28,7 +28,7 @@ var parse = function (input, options) {
         // get NLF version
         var version_1 = lines_1[0].match(/\d+$/)[0] || 6;
         lines_1.forEach(function (line, index) {
-            var key = enum_js_1.default["v" + version_1][index];
+            var key = dictionary_js_1.default["v" + version_1][index];
             if (typeof key !== 'undefined' && key.startsWith('^')) {
                 // Language String
                 key = key.replace('^', '');
@@ -90,21 +90,21 @@ var stringify = function (input) {
     try {
         output += "# Header, don't edit\n" + inputObj.header;
         output += "\n# Language ID\n" + inputObj.id;
-        if (typeof inputObj.font !== 'undefined' && enum_js_1.default["v" + version].includes('fontname')) {
+        if (typeof inputObj.font !== 'undefined' && dictionary_js_1.default["v" + version].includes('fontname')) {
             output += "\n# Font and size - dash (-) means default";
             output += (inputObj.font.name === null) ? '\n-' : "\n" + inputObj.font.name;
             output += (inputObj.font.size === null) ? '\n-' : "\n" + inputObj.font.size;
         }
-        if (enum_js_1.default["v" + version].includes('codepage')) {
+        if (dictionary_js_1.default["v" + version].includes('codepage')) {
             output += "\n# Codepage - dash (-) means ASCII code page";
             output += (inputObj.codepage === null) ? '\n-' : "\n" + inputObj.codepage;
         }
-        if (enum_js_1.default["v" + version].includes('rtl')) {
+        if (dictionary_js_1.default["v" + version].includes('rtl')) {
             output += "\n# RTL - anything else than RTL means LTR";
             output += (inputObj.rtl === true) ? '\nRTL' : '\n-';
         }
         for (var key in inputObj.strings) {
-            if (inputObj.strings.hasOwnProperty(key) && enum_js_1.default["v" + version].includes("^" + key)) {
+            if (inputObj.strings.hasOwnProperty(key) && dictionary_js_1.default["v" + version].includes("^" + key)) {
                 output += "\n# ^" + key + "\n" + inputObj.strings[key];
             }
         }
