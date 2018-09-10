@@ -59,6 +59,10 @@ Usage: `stringify(Object|string)`
 
 Converts an NSIS Language File object or JSON string to an `.nlf` string
 
+## Related
+
+- [nlf-cli](https://www.npmjs.org/package/@nsis/nlf-cli) - command-line tool to convert NLF files
+
 ## License
 
 This work is licensed under [The MIT License](https://opensource.org/licenses/MIT)
