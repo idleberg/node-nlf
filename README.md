@@ -17,10 +17,10 @@ Use ES6 imports or `require()` to include the module:
 
 ```js
 // ECMAScript Import
-import * as NLF from 'nlf';
+import * as NLF from '@nsis/nlf';
 
 // CommonJS Require
-const NLF = require('nlf');
+const NLF = require('@nsis/nlf');
 ```
 
 Example usage in script:
