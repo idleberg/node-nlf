@@ -4,7 +4,8 @@
   "description": "Parser and stringifier for NSIS Language Files",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --project ./",
+    "build": "tsc --pretty --project ./",
+    "dev": "tsc --watch --pretty --project ./",
     "lint": "tslint --project .",
     "precommit": "npm run lint",
     "test": "npx ava ./test/default.js --verbose"
