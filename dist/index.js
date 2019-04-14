@@ -36,10 +36,9 @@ var parse = function (input, options) {
             }
             else {
                 // Meta Data
-                console.log(key);
                 switch (key) {
                     case 'id':
-                    case 'codepage':
+                    case 'code_page':
                         output[key] = (lines_1[index] === '-') ? null : parseInt(lines_1[index]);
                         break;
                     case 'font':
@@ -96,7 +95,7 @@ var stringify = function (input) {
             output += (inputObj.font.name === null) ? '\n-' : "\n" + inputObj.font.name;
             output += (inputObj.font.size === null) ? '\n-' : "\n" + inputObj.font.size;
         }
-        if (dictionary_js_1.default["v" + version].includes('codepage')) {
+        if (dictionary_js_1.default["v" + version].includes('code_page')) {
             output += "\n# Codepage - dash (-) means ASCII code page";
             output += (inputObj.code_page === null) ? '\n-' : "\n" + inputObj.code_page;
         }
