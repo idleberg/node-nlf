@@ -21,11 +21,11 @@
     "converter"
   ],
   "devDependencies": {
-    "@types/node": "^10.12.26",
-    "ava": "^1.2.1",
+    "@types/node": "^11.13.4",
+    "ava": "^1.4.1",
     "glob": "^7.1.3",
     "husky": "^1.3.1",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.3"
   }
 }
