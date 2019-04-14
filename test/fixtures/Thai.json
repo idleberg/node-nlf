@@ -5,7 +5,7 @@
     "name": null,
     "size": null
   },
-  "codepage": 874,
+  "code_page": 874,
   "rtl": false,
   "strings": {
     "Branding": "Nullsoft Install System %s",

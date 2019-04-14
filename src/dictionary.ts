@@ -74,7 +74,7 @@ export default {
     'id',
     'fontname',
     'fontsize',
-    'codepage',
+    'code_page',
     'rtl',
     '^Branding',
     '^SetupCaption',

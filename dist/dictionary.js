@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     /**
      * NLF v2
+     + used up to NSIS 2.0 beta 3
      */
     v2: [
         'header',
@@ -67,6 +68,7 @@ exports.default = {
     ],
     /**
      * NLF v6
+     + used as of NSIS 2.0 beta 4
      */
     v6: [
         'header',

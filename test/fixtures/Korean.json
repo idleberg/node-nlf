@@ -5,7 +5,7 @@
     "name": "굴림",
     "size": 9
   },
-  "codepage": 949,
+  "code_page": 949,
   "rtl": false,
   "strings": {
     "Branding": "Nullsoft Install System %s",

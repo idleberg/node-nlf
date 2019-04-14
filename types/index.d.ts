@@ -1,5 +1,5 @@
 interface NSISLanguageObject {
-  codepage: null | number;
+  code_page: null | number;
   font: FontSettings;
   header: string;
   id: number;

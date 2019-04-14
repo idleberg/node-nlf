@@ -5,7 +5,7 @@
     "name": "ＭＳ Ｐゴシック",
     "size": 9
   },
-  "codepage": 932,
+  "code_page": 932,
   "rtl": false,
   "strings": {
     "Branding": "Nullsoft Install System %s",

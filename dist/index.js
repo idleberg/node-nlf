@@ -15,7 +15,7 @@ var parse = function (input, options) {
             name: null,
             size: null
         },
-        codepage: null,
+        code_page: null,
         rtl: false,
         strings: {},
     };
@@ -36,6 +36,7 @@ var parse = function (input, options) {
             }
             else {
                 // Meta Data
+                console.log(key);
                 switch (key) {
                     case 'id':
                     case 'codepage':
@@ -97,7 +98,7 @@ var stringify = function (input) {
         }
         if (dictionary_js_1.default["v" + version].includes('codepage')) {
             output += "\n# Codepage - dash (-) means ASCII code page";
-            output += (inputObj.codepage === null) ? '\n-' : "\n" + inputObj.codepage;
+            output += (inputObj.code_page === null) ? '\n-' : "\n" + inputObj.code_page;
         }
         if (dictionary_js_1.default["v" + version].includes('rtl')) {
             output += "\n# RTL - anything else than RTL means LTR";

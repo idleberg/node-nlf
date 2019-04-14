@@ -13,7 +13,7 @@ const parse = (input: string, options: ParserOptions = {}): Object|string => {
       name: null,
       size: null
     },
-    codepage: null,
+    code_page: null,
     rtl: false,
     strings: {},
   };
@@ -38,9 +38,10 @@ const parse = (input: string, options: ParserOptions = {}): Object|string => {
         output.strings[key] = lines[index];
       } else {
         // Meta Data
+        console.log(key);
         switch (key) {
           case 'id':
-          case 'codepage':
+          case 'code_page':
             output[key] = (lines[index] === '-') ? null : parseInt(lines[index]);
             break;
           case 'font':
@@ -104,7 +105,7 @@ const stringify = (input: any): string => {
 
     if (NLFStrings[`v${version}`].includes('codepage')) {
       output += `\n# Codepage - dash (-) means ASCII code page`;
-      output += (inputObj.codepage === null) ? '\n-' : `\n${inputObj.codepage}`;
+      output += (inputObj.code_page === null) ? '\n-' : `\n${inputObj.code_page}`;
     }
 
     if (NLFStrings[`v${version}`].includes('rtl')) {
