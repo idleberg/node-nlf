@@ -6,5 +6,7 @@ export default {
     dir: 'dist',
     format: 'cjs'
   },
-  plugins: [typescript()]
+  plugins: [
+    typescript()
+  ]
 };
