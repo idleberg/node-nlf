@@ -5,7 +5,7 @@ import NLFStrings from './dictionary.js';
  * @param input - NLF string
  * @returns - NLF object
  */
-const parse = (input: string, options: ParserOptions = {}): Object|string => {
+const parse = (input: string, options: ParserOptions = {}): unknown|string => {
   const output: NSISLanguageObject = {
     header: '',
     id: 0,
@@ -18,52 +18,46 @@ const parse = (input: string, options: ParserOptions = {}): Object|string => {
     strings: {},
   };
 
-  let strings: any = {};
+  // remove all comments
+  input = input.trim().replace(/^#.*(\r?\n|$)/mg, '');
 
-  try {
-    // remove all comments
-    input = input.trim().replace(/^#.*(\r?\n|$)/mg, '');
+  // split into lines
+  const lines: Array<string> = input.split(/\r?\n/);
 
-    // split into lines
-    const lines: Array<string> = input.split(/\r?\n/);
+  // get NLF version
+  const version = lines[0].match(/\d+$/)[0] || 6;
 
-    // get NLF version
-    const version = lines[0].match(/\d+$/)[0] || 6;
-
-    lines.forEach((line, index) => {
-      let key = NLFStrings[`v${version}`][index];
-      if (typeof key !== 'undefined' && key.startsWith('^')) {
-        // Language String
-        key = key.replace('^', '');
-        output.strings[key] = lines[index];
-      } else {
-        // Meta Data
-        switch (key) {
-          case 'id':
-          case 'code_page':
-            output[key] = (lines[index] === '-') ? null : parseInt(lines[index]);
-            break;
-          case 'font':
-          case 'fontname':
-            output.font.name = (lines[index] === '-') ? null : lines[index];
-            break;
-          case 'fontsize':
-            output.font.size = (lines[index] === '-') ? null : parseInt(lines[index]);
-            break;
-          case 'rtl':
-            output[key] = (lines[index].toUpperCase() === 'RTL') ? true : false;
-            break;
-          default:
-            if (typeof key !== 'undefined') {
-              output[key] = lines[index];
-            }
-            break;
-        }
+  lines.forEach((line, index) => {
+    let key = NLFStrings[`v${version}`][index];
+    if (typeof key !== 'undefined' && key.startsWith('^')) {
+      // Language String
+      key = key.replace('^', '');
+      output.strings[key] = lines[index];
+    } else {
+      // Meta Data
+      switch (key) {
+        case 'id':
+        case 'code_page':
+          output[key] = (lines[index] === '-') ? null : parseInt(lines[index]);
+          break;
+        case 'font':
+        case 'fontname':
+          output.font.name = (lines[index] === '-') ? null : lines[index];
+          break;
+        case 'fontsize':
+          output.font.size = (lines[index] === '-') ? null : parseInt(lines[index]);
+          break;
+        case 'rtl':
+          output[key] = (lines[index].toUpperCase() === 'RTL') ? true : false;
+          break;
+        default:
+          if (typeof key !== 'undefined') {
+            output[key] = lines[index];
+          }
+          break;
       }
-    });
-  } catch (e) {
-    throw e;
-  }
+    }
+  });
 
   if (options.stringify === true) {
     const indentation: number = (options.minify === true) ? 0 : 2;
@@ -78,8 +72,8 @@ const parse = (input: string, options: ParserOptions = {}): Object|string => {
  * @param input - NLF object
  * @returns - NLF string
  */
-const stringify = (input: any): string => {
-  let output: string = '';
+const stringify = (input: unknown): string => {
+  let output = '';
   let inputObj: NSISLanguageObject;
 
   // Convert JSON string to object, if necessary
@@ -92,33 +86,29 @@ const stringify = (input: any): string => {
   // get NLF version
   const version = inputObj.header.match(/\d+$/)[0] || 6;
 
-  try {
-    output += `# Header, don't edit\n${inputObj.header}`;
-    output += `\n# Language ID\n${inputObj.id}`;
+  output += `# Header, don't edit\n${inputObj.header}`;
+  output += `\n# Language ID\n${inputObj.id}`;
 
-    if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
-      output += `\n# Font and size - dash (-) means default`;
-      output += (inputObj.font.name === null) ? '\n-' : `\n${inputObj.font.name}`;
-      output += (inputObj.font.size === null) ? '\n-' : `\n${inputObj.font.size}`;
-    }
+  if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
+    output += `\n# Font and size - dash (-) means default`;
+    output += (inputObj.font.name === null) ? '\n-' : `\n${inputObj.font.name}`;
+    output += (inputObj.font.size === null) ? '\n-' : `\n${inputObj.font.size}`;
+  }
 
-    if (NLFStrings[`v${version}`].includes('code_page')) {
-      output += `\n# Codepage - dash (-) means ASCII code page`;
-      output += (inputObj.code_page === null) ? '\n-' : `\n${inputObj.code_page}`;
-    }
+  if (NLFStrings[`v${version}`].includes('code_page')) {
+    output += `\n# Codepage - dash (-) means ASCII code page`;
+    output += (inputObj.code_page === null) ? '\n-' : `\n${inputObj.code_page}`;
+  }
 
-    if (NLFStrings[`v${version}`].includes('rtl')) {
-      output += `\n# RTL - anything else than RTL means LTR`;
-      output += (inputObj.rtl === true) ? '\nRTL' : '\n-';
-    }
+  if (NLFStrings[`v${version}`].includes('rtl')) {
+    output += `\n# RTL - anything else than RTL means LTR`;
+    output += (inputObj.rtl === true) ? '\nRTL' : '\n-';
+  }
 
-    for (let key in inputObj.strings) {
-      if (inputObj.strings.hasOwnProperty(key) && NLFStrings[`v${version}`].includes(`^${key}`)) {
-        output += `\n# ^${key}\n${inputObj.strings[key]}`;
-      }
+  for (const key in inputObj.strings) {
+    if (inputObj.strings.key && NLFStrings[`v${version}`].includes(`^${key}`)) {
+      output += `\n# ^${key}\n${inputObj.strings[key]}`;
     }
-  } catch (e) {
-    throw e;
   }
 
   return output;
@@ -127,6 +117,6 @@ const stringify = (input: any): string => {
 export { parse, stringify };
 
 // Helpers
-function isObject (obj: any): boolean {
+function isObject (obj: unknown): boolean {
   return Object.prototype.toString.call(obj) === '[object Object]';
 }
