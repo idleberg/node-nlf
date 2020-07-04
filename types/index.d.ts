@@ -4,7 +4,7 @@ interface NSISLanguageObject {
   header: string;
   id: number;
   rtl: boolean;
-  strings: Object;
+  strings: object;
 }
 
 interface FontSettings {

@@ -1,4 +1,4 @@
-import NLFStrings from './dictionary.js';
+import NLFStrings from './mapping';
 
 /**
  * Parses an NSIS language file string
@@ -29,6 +29,7 @@ const parse = (input: string, options: ParserOptions = {}): unknown|string => {
 
   lines.forEach((line, index) => {
     let key = NLFStrings[`v${version}`][index];
+
     if (typeof key !== 'undefined' && key.startsWith('^')) {
       // Language String
       key = key.replace('^', '');
@@ -38,17 +39,29 @@ const parse = (input: string, options: ParserOptions = {}): unknown|string => {
       switch (key) {
         case 'id':
         case 'code_page':
-          output[key] = (lines[index] === '-') ? null : parseInt(lines[index]);
+          output[key] = (lines[index] === '-')
+            ? null
+            : parseInt(lines[index]);
+
           break;
         case 'font':
         case 'fontname':
-          output.font.name = (lines[index] === '-') ? null : lines[index];
+          output.font.name = (lines[index] === '-')
+            ? null
+            : lines[index];
+
           break;
         case 'fontsize':
-          output.font.size = (lines[index] === '-') ? null : parseInt(lines[index]);
+          output.font.size = (lines[index] === '-')
+            ? null
+            : parseInt(lines[index]);
+
           break;
         case 'rtl':
-          output[key] = (lines[index].toUpperCase() === 'RTL') ? true : false;
+          output[key] = (lines[index].toUpperCase() === 'RTL')
+            ? true
+            : false;
+
           break;
         default:
           if (typeof key !== 'undefined') {
@@ -60,7 +73,10 @@ const parse = (input: string, options: ParserOptions = {}): unknown|string => {
   });
 
   if (options.stringify === true) {
-    const indentation: number = (options.minify === true) ? 0 : 2;
+    const indentation: number = (options.minify === true)
+      ? 0
+      : 2;
+
     return JSON.stringify(output, null, indentation);
   }
 
@@ -72,51 +88,61 @@ const parse = (input: string, options: ParserOptions = {}): unknown|string => {
  * @param input - NLF object
  * @returns - NLF string
  */
-const stringify = (input: unknown): string => {
-  let output = '';
-  let inputObj: NSISLanguageObject;
+const stringify = (input: string | NSISLanguageObject): string => {
+  const output = [];
 
-  // Convert JSON string to object, if necessary
-  if (isObject(input) === false) {
-    inputObj = JSON.parse(input);
-  } else {
-    inputObj = input;
-  }
+  const inputObj: NSISLanguageObject = typeof input === 'string'
+    ? JSON.parse(input)
+    : input
 
   // get NLF version
   const version = inputObj.header.match(/\d+$/)[0] || 6;
 
-  output += `# Header, don't edit\n${inputObj.header}`;
-  output += `\n# Language ID\n${inputObj.id}`;
+  output.push('# Header, don\'t edit', inputObj.header);
+  output.push('# Language ID', inputObj.id);
 
   if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
-    output += `\n# Font and size - dash (-) means default`;
-    output += (inputObj.font.name === null) ? '\n-' : `\n${inputObj.font.name}`;
-    output += (inputObj.font.size === null) ? '\n-' : `\n${inputObj.font.size}`;
-  }
+    output.push(`# Font and size - dash (-) means default`);
+    if (inputObj.font.name) {
+      output.push(`${inputObj.font.name}`);
+    } else {
+      output.push('-');
+    }
 
-  if (NLFStrings[`v${version}`].includes('code_page')) {
-    output += `\n# Codepage - dash (-) means ASCII code page`;
-    output += (inputObj.code_page === null) ? '\n-' : `\n${inputObj.code_page}`;
-  }
-
-  if (NLFStrings[`v${version}`].includes('rtl')) {
-    output += `\n# RTL - anything else than RTL means LTR`;
-    output += (inputObj.rtl === true) ? '\nRTL' : '\n-';
-  }
-
-  for (const key in inputObj.strings) {
-    if (inputObj.strings.key && NLFStrings[`v${version}`].includes(`^${key}`)) {
-      output += `\n# ^${key}\n${inputObj.strings[key]}`;
+    if (inputObj.font.size) {
+      output.push(`${inputObj.font.size}`);
+    } else {
+      output.push('-');
     }
   }
 
-  return output;
+  if (NLFStrings[`v${version}`].includes('code_page')) {
+    output.push(`# Codepage - dash (-) means ASCII code page`);
+
+    if (inputObj.code_page) {
+      output.push(`${inputObj.code_page}`);
+    } else {
+      output.push('-');
+    }
+  }
+
+  if (NLFStrings[`v${version}`].includes('rtl')) {
+    output.push(`# RTL - anything else than RTL means LTR`);
+
+    if (inputObj.rtl) {
+      output.push('RTL')
+    } else {
+      output.push('-')
+    }
+  }
+
+  for (const key in inputObj.strings) {
+    if (NLFStrings[`v${version}`].includes(`^${key}`)) {
+      output.push(`# ^${key}`, inputObj.strings[key]);
+    }
+  }
+
+  return output.join('\n');
 };
 
 export { parse, stringify };
-
-// Helpers
-function isObject (obj: unknown): boolean {
-  return Object.prototype.toString.call(obj) === '[object Object]';
-}
