@@ -27,7 +27,7 @@ const parse = (input: string, options: ParserOptions = {}): unknown|string => {
   // get NLF version
   const version = lines[0].match(/\d+$/)[0] || 6;
 
-  lines.forEach((line, index) => {
+  lines.map((line, index) => {
     let key = NLFStrings[`v${version}`][index];
 
     if (typeof key !== 'undefined' && key.startsWith('^')) {

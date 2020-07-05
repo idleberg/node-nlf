@@ -195,7 +195,7 @@ var parse = function (input, options) {
     var lines = input.split(/\r?\n/);
     // get NLF version
     var version = lines[0].match(/\d+$/)[0] || 6;
-    lines.forEach(function (line, index) {
+    lines.map(function (line, index) {
         var key = NLFStrings["v" + version][index];
         if (typeof key !== 'undefined' && key.startsWith('^')) {
             // Language String
