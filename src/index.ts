@@ -5,7 +5,7 @@ import NLFStrings from './mapping';
  * @param input - NLF string
  * @returns - NLF object
  */
-const parse = (input: string, options: ParserOptions = {}): unknown|string => {
+const parse = (input: string, options: ParserOptions = {}): unknown | string => {
   const output: NSISLanguageObject = {
     header: '',
     id: 0,
