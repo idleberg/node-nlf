@@ -6,7 +6,7 @@ import glob from 'glob';
 import test from 'ava';
 
 glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
-  files.forEach(file => {
+  files.map(file => {
     let fileDir = dirname(file);
     let fileBase = basename(file, '.nlf');
 
