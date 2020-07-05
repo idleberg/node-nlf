@@ -7,13 +7,13 @@ import test from 'ava';
 
 glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
   files.map(file => {
-    let fileDir = dirname(file);
-    let fileBase = basename(file, '.nlf');
+    const fileDir = dirname(file);
+    const fileBase = basename(file, '.nlf');
 
     test(`Object: ${basename(file)}`, async t => {
-      let nlfFile = await fs.promises.readFile(file, 'utf8');
-      let jsonPath = join(fileDir, fileBase + '.json');
-      let jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
+      const nlfFile = await fs.promises.readFile(file, 'utf8');
+      const jsonPath = join(fileDir, fileBase + '.json');
+      const jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
 
       const nlfString = NLF.stringify(JSON.parse(jsonFile));
 
@@ -25,9 +25,9 @@ glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
     });
 
     test(`JSON: ${basename(file)}`, async t => {
-      let nlfFile = await fs.promises.readFile(file, 'utf8');
-      let jsonPath = join(fileDir, fileBase + '.json');
-      let jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
+      const nlfFile = await fs.promises.readFile(file, 'utf8');
+      const jsonPath = join(fileDir, fileBase + '.json');
+      const jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
 
       const nlfString = NLF.stringify(jsonFile);
 
