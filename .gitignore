@@ -1,14 +1,15 @@
-# dependencies
+# Package Manager
 bower_components/
 node_modules/
-vendor/
-
-# package manager files
 npm-debug.log*
+vendor/
 yarn-error.log
 yarn.lock
 
-# project specific
+# Development
+.eslintcache
+
+# Project specific
 *.exe
 *.nsi
 test.js
