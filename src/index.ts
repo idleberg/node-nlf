@@ -1,3 +1,4 @@
+import JSON from 'json5';
 import NLFStrings from './mapping';
 
 /**

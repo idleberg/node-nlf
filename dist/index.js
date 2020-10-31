@@ -2,6 +2,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var JSON = require('json5');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var JSON__default = /*#__PURE__*/_interopDefaultLegacy(JSON);
+
 var NLFStrings = {
     /**
      * NLF v2
@@ -239,7 +245,7 @@ var parse = function (input, options) {
         var indentation = (options.minify === true)
             ? 0
             : 2;
-        return JSON.stringify(output, null, indentation);
+        return JSON__default['default'].stringify(output, null, indentation);
     }
     return output;
 };
@@ -251,7 +257,7 @@ var parse = function (input, options) {
 var stringify = function (input) {
     var output = [];
     var inputObj = typeof input === 'string'
-        ? JSON.parse(input)
+        ? JSON__default['default'].parse(input)
         : input;
     // get NLF version
     var version = inputObj.header.match(/\d+$/)[0] || 6;

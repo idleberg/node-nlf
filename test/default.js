@@ -1,8 +1,9 @@
 // Dependencies
-import * as NLF from '../dist';
 import { basename, dirname, join } from 'path';
+import * as NLF from '../dist';
 import fs from 'fs';
 import glob from 'glob';
+import JSON from 'json5';
 import test from 'ava';
 
 glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
