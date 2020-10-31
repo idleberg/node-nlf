@@ -1,4 +1,4 @@
-import JSON from 'json5';
+import JSON5 from 'json5';
 import NLFStrings from './mapping';
 
 /**
@@ -93,7 +93,7 @@ const stringify = (input: string | NSISLanguageObject): string => {
   const output = [];
 
   const inputObj: NSISLanguageObject = typeof input === 'string'
-    ? JSON.parse(input)
+    ? JSON5.parse(input)
     : input
 
   // get NLF version
