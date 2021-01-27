@@ -10,6 +10,8 @@ export default {
     format: 'cjs'
   },
   plugins: [
-    typescript()
+    typescript({
+      strictNullChecks: true
+    })
   ]
 };
