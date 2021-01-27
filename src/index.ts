@@ -2,11 +2,23 @@ import JSON5 from 'json5';
 import NLFStrings from './mapping';
 
 /**
+ * Get version from input string
+ * @param input
+ */
+function getVersion(input: string): string {
+  const groups = input.match(/(?<version>\d+)$/)?.groups;
+
+  return groups?.version?.length
+  ? groups?.version
+  : '6';
+}
+
+/**
  * Parses an NSIS language file string
  * @param input - NLF string
  * @returns - NLF object
  */
-const parse = (input: string, options: ParserOptions = {}): unknown | string => {
+function parse(input: string, options: ParserOptions = {}): unknown | string {
   const output: NSISLanguageObject = {
     header: '',
     id: 0,
@@ -26,7 +38,7 @@ const parse = (input: string, options: ParserOptions = {}): unknown | string => 
   const lines: Array<string> = input.split(/\r?\n/);
 
   // get NLF version
-  const version = lines[0].match(/\d+$/)[0] || 6;
+  const version = getVersion(lines[0]);
 
   lines.map((line, index) => {
     let key = NLFStrings[`v${version}`][index];
@@ -82,25 +94,25 @@ const parse = (input: string, options: ParserOptions = {}): unknown | string => 
   }
 
   return output;
-};
+}
 
 /**
  * Stringifies an NSIS language file object
  * @param input - NLF object
  * @returns - NLF string
  */
-const stringify = (input: string | NSISLanguageObject): string => {
-  const output = [];
+function stringify(input: string | NSISLanguageObject): string {
+  const output: string[] = [];
 
   const inputObj: NSISLanguageObject = typeof input === 'string'
     ? JSON5.parse(input)
-    : input
+    : input;
 
   // get NLF version
-  const version = inputObj.header.match(/\d+$/)[0] || 6;
+  const version = getVersion(inputObj.header);
 
   output.push('# Header, don\'t edit', inputObj.header);
-  output.push('# Language ID', inputObj.id);
+  output.push('# Language ID', String(inputObj.id));
 
   if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
     output.push(`# Font and size - dash (-) means default`);
@@ -131,9 +143,9 @@ const stringify = (input: string | NSISLanguageObject): string => {
     output.push(`# RTL - anything else than RTL means LTR`);
 
     if (inputObj.rtl) {
-      output.push('RTL')
+      output.push('RTL');
     } else {
-      output.push('-')
+      output.push('-');
     }
   }
 
@@ -144,6 +156,6 @@ const stringify = (input: string | NSISLanguageObject): string => {
   }
 
   return output.join('\n');
-};
+}
 
 export { parse, stringify };
