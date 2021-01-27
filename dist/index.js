@@ -178,11 +178,20 @@ var NLFStrings = {
 };
 
 /**
+ * Get version from input string
+ * @param input
+ */
+function getVersion(input) {
+    var _a, _b;
+    var groups = (_a = input.match(/(?<version>\d+)$/)) === null || _a === void 0 ? void 0 : _a.groups;
+    return ((_b = groups === null || groups === void 0 ? void 0 : groups.version) === null || _b === void 0 ? void 0 : _b.length) ? groups === null || groups === void 0 ? void 0 : groups.version : '6';
+}
+/**
  * Parses an NSIS language file string
  * @param input - NLF string
  * @returns - NLF object
  */
-var parse = function (input, options) {
+function parse(input, options) {
     if (options === void 0) { options = {}; }
     var output = {
         header: '',
@@ -200,7 +209,7 @@ var parse = function (input, options) {
     // split into lines
     var lines = input.split(/\r?\n/);
     // get NLF version
-    var version = lines[0].match(/\d+$/)[0] || 6;
+    var version = getVersion(lines[0]);
     lines.map(function (line, index) {
         var key = NLFStrings["v" + version][index];
         if (typeof key !== 'undefined' && key.startsWith('^')) {
@@ -248,21 +257,21 @@ var parse = function (input, options) {
         return JSON.stringify(output, null, indentation);
     }
     return output;
-};
+}
 /**
  * Stringifies an NSIS language file object
  * @param input - NLF object
  * @returns - NLF string
  */
-var stringify = function (input) {
+function stringify(input) {
     var output = [];
     var inputObj = typeof input === 'string'
         ? JSON5__default['default'].parse(input)
         : input;
     // get NLF version
-    var version = inputObj.header.match(/\d+$/)[0] || 6;
+    var version = getVersion(inputObj.header);
     output.push('# Header, don\'t edit', inputObj.header);
-    output.push('# Language ID', inputObj.id);
+    output.push('# Language ID', String(inputObj.id));
     if (typeof inputObj.font !== 'undefined' && NLFStrings["v" + version].includes('fontname')) {
         output.push("# Font and size - dash (-) means default");
         if (inputObj.font.name) {
@@ -302,7 +311,7 @@ var stringify = function (input) {
         }
     }
     return output.join('\n');
-};
+}
 
 exports.parse = parse;
 exports.stringify = stringify;
