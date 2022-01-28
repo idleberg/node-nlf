@@ -1,10 +1,12 @@
 // Dependencies
-import { basename, dirname, join } from 'path';
-import * as NLF from '../dist';
-import fs from 'fs';
+import { basename, dirname, join, resolve } from 'node:path';
+import * as NLF from '../dist/index.mjs';
+import fs from 'node:fs';
 import glob from 'glob';
 import JSON from 'json5';
 import test from 'ava';
+
+const __dirname = resolve(dirname(''));
 
 glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
   files.map(file => {

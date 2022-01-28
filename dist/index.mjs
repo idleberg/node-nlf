@@ -1,28 +1,4 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var JSON5 = require('json5');
-
-function _interopNamespace(e) {
-    if (e && e.__esModule) return e;
-    var n = Object.create(null);
-    if (e) {
-        Object.keys(e).forEach(function (k) {
-            if (k !== 'default') {
-                var d = Object.getOwnPropertyDescriptor(e, k);
-                Object.defineProperty(n, k, d.get ? d : {
-                    enumerable: true,
-                    get: function () { return e[k]; }
-                });
-            }
-        });
-    }
-    n["default"] = e;
-    return Object.freeze(n);
-}
-
-var JSON5__namespace = /*#__PURE__*/_interopNamespace(JSON5);
+import * as JSON5 from 'json5';
 
 var NLFStrings = {
     /**
@@ -282,7 +258,7 @@ function parse(input, options = {}) {
 function stringify(input) {
     const output = [];
     const inputObj = typeof input === 'string'
-        ? JSON5__namespace.parse(input)
+        ? JSON5.parse(input)
         : input;
     // get NLF version
     const version = getVersion(inputObj.header);
@@ -329,6 +305,5 @@ function stringify(input) {
     return output.join('\n');
 }
 
-exports.parse = parse;
-exports.stringify = stringify;
-//# sourceMappingURL=index.js.map
+export { parse, stringify };
+//# sourceMappingURL=index.mjs.map
