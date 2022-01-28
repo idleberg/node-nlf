@@ -16,14 +16,14 @@
     "prepare": "husky install"
   },
   "type": "module",
-  "typings": "types/",
   "export": {
-    "import": "dist/index.js",
-    "default": "dist/index.js"
+    "import": "dist/index.mjs",
+    "require": "dist/index.cjs"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
+  "typings": "types/",
   "repository": {
     "type": "git",
     "url": "https://github.com/idleberg/node-nlf.git"
