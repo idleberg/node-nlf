@@ -198,10 +198,9 @@ var NLFStrings = {
  * @param input
  */
 function getVersion(input) {
-    var _a, _b;
-    var groups = (_a = input.match(/(?<version>\d+)$/)) === null || _a === void 0 ? void 0 : _a.groups;
-    return ((_b = groups === null || groups === void 0 ? void 0 : groups.version) === null || _b === void 0 ? void 0 : _b.length)
-        ? groups === null || groups === void 0 ? void 0 : groups.version
+    const groups = input.match(/(?<version>\d+)$/)?.groups;
+    return groups?.version?.length
+        ? groups?.version
         : '6';
 }
 /**
@@ -209,9 +208,8 @@ function getVersion(input) {
  * @param input - NLF string
  * @returns - NLF object
  */
-function parse(input, options) {
-    if (options === void 0) { options = {}; }
-    var output = {
+function parse(input, options = {}) {
+    const output = {
         header: '',
         id: 0,
         font: {
@@ -220,16 +218,16 @@ function parse(input, options) {
         },
         code_page: null,
         rtl: false,
-        strings: {}
+        strings: {},
     };
     // remove all comments
     input = input.trim().replace(/^#.*(\r?\n|$)/mg, '');
     // split into lines
-    var lines = input.split(/\r?\n/);
+    const lines = input.split(/\r?\n/);
     // get NLF version
-    var version = getVersion(lines[0]);
-    lines.map(function (line, index) {
-        var key = NLFStrings["v".concat(version)][index];
+    const version = getVersion(lines[0]);
+    lines.map((line, index) => {
+        let key = NLFStrings[`v${version}`][index];
         if (typeof key !== 'undefined' && key.startsWith('^')) {
             // Language String
             key = key.replace('^', '');
@@ -269,7 +267,7 @@ function parse(input, options) {
         }
     });
     if (options.stringify === true) {
-        var indentation = (options.minify === true)
+        const indentation = (options.minify === true)
             ? 0
             : 2;
         return JSON.stringify(output, null, indentation);
@@ -282,40 +280,40 @@ function parse(input, options) {
  * @returns - NLF string
  */
 function stringify(input) {
-    var output = [];
-    var inputObj = typeof input === 'string'
+    const output = [];
+    const inputObj = typeof input === 'string'
         ? JSON5__namespace.parse(input)
         : input;
     // get NLF version
-    var version = getVersion(inputObj.header);
+    const version = getVersion(inputObj.header);
     output.push('# Header, don\'t edit', inputObj.header);
     output.push('# Language ID', String(inputObj.id));
-    if (typeof inputObj.font !== 'undefined' && NLFStrings["v".concat(version)].includes('fontname')) {
-        output.push("# Font and size - dash (-) means default");
+    if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
+        output.push(`# Font and size - dash (-) means default`);
         if (inputObj.font.name) {
-            output.push("".concat(inputObj.font.name));
+            output.push(`${inputObj.font.name}`);
         }
         else {
             output.push('-');
         }
         if (inputObj.font.size) {
-            output.push("".concat(inputObj.font.size));
+            output.push(`${inputObj.font.size}`);
         }
         else {
             output.push('-');
         }
     }
-    if (NLFStrings["v".concat(version)].includes('code_page')) {
-        output.push("# Codepage - dash (-) means ASCII code page");
+    if (NLFStrings[`v${version}`].includes('code_page')) {
+        output.push(`# Codepage - dash (-) means ASCII code page`);
         if (inputObj.code_page) {
-            output.push("".concat(inputObj.code_page));
+            output.push(`${inputObj.code_page}`);
         }
         else {
             output.push('-');
         }
     }
-    if (NLFStrings["v".concat(version)].includes('rtl')) {
-        output.push("# RTL - anything else than RTL means LTR");
+    if (NLFStrings[`v${version}`].includes('rtl')) {
+        output.push(`# RTL - anything else than RTL means LTR`);
         if (inputObj.rtl) {
             output.push('RTL');
         }
@@ -323,9 +321,9 @@ function stringify(input) {
             output.push('-');
         }
     }
-    for (var key in inputObj.strings) {
-        if (NLFStrings["v".concat(version)].includes("^".concat(key))) {
-            output.push("# ^".concat(key), inputObj.strings[key]);
+    for (const key in inputObj.strings) {
+        if (NLFStrings[`v${version}`].includes(`^${key}`)) {
+            output.push(`# ^${key}`, inputObj.strings[key]);
         }
     }
     return output.join('\n');
@@ -333,3 +331,4 @@ function stringify(input) {
 
 exports.parse = parse;
 exports.stringify = stringify;
+//# sourceMappingURL=index.js.map

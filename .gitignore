@@ -11,6 +11,7 @@ yarn.lock
 
 # Project specific
 *.exe
+*.map
 *.nsi
 test.js
 test.ts
