@@ -3,7 +3,7 @@ import { basename, dirname, resolve } from 'node:path';
 import * as NLF from '../dist/index.mjs';
 import fs from 'node:fs';
 import glob from 'glob';
-import JSON from 'json5';
+import JSON5 from 'json5';
 import test from 'ava';
 
 const __dirname = resolve(dirname(''));
@@ -18,7 +18,7 @@ glob(resolve(__dirname, 'test/fixtures/*.nlf'), (err, files) => {
       const jsonPath = resolve(fileDir, fileBase + '.json');
       const jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
 
-      const nlfString = NLF.stringify(JSON.parse(jsonFile));
+      const nlfString = NLF.stringify(JSON5.parse(jsonFile));
 
       // Remove comments and normalize line endings
       const actual = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
