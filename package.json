@@ -12,10 +12,15 @@
     "lint:ts": "eslint ./src --ignore-path .gitignore",
     "lint": "npm-run-all --parallel lint:*",
     "start": "rollup --watch --config",
-    "test": "ava ./test/default.js --verbose",
+    "test": "ava ./test/default.mjs --verbose",
     "prepare": "husky install"
   },
-  "main": "dist/index.js",
+  "type": "module",
+  "typings": "types/",
+  "export": {
+    "import": "dist/index.js",
+    "default": "dist/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/idleberg/node-nlf.git"
