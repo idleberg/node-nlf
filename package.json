@@ -1,6 +1,6 @@
 {
   "name": "@nsis/nlf",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Parser and stringifier for NSIS Language Files",
   "license": "MIT",
   "scripts": {
