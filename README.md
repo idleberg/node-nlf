@@ -2,7 +2,7 @@
 
 [![npm](https://flat.badgen.net/npm/license/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
 [![npm](https://flat.badgen.net/npm/v/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
-[![CircleCI](https://flat.badgen.net/circleci/github/idleberg/node-nlf)](https://circleci.com/gh/idleberg/node-nlf)
+[![CI](https://img.shields.io/github/workflow/status/idleberg/node-nlf/CI?style=flat-square)](https://github.com/idleberg/node-nlf/actions)
 [![David](https://flat.badgen.net/david/dev/idleberg/node-nlf)](https://david-dm.org/idleberg/node-nlf?type=dev)
 
 Parser and stringifier for NSIS Language Files (.nlf)
@@ -17,17 +17,20 @@ Use ES6 imports or `require()` to include the module:
 
 ```js
 // ECMAScript Import
-import * as NLF from '@nsis/nlf';
+import * as NLF from "@nsis/nlf";
 
 // CommonJS Require
-const NLF = require('@nsis/nlf');
+const NLF = require("@nsis/nlf");
 ```
 
 Example usage in script:
 
 ```js
 // Read an NSIS Language File
-const languageFile = fs.readFileSync('Contrib/Language files/English.nlf', 'utf8');
+const languageFile = fs.readFileSync(
+  "Contrib/Language files/English.nlf",
+  "utf8"
+);
 
 const languageObj = NLF.parse(languageFile);
 const languageNew = NLF.stringify(languageObj);
@@ -65,4 +68,4 @@ Converts an NSIS Language File object or JSON string to an `.nlf` string
 
 ## License
 
-This work is licensed under [The MIT License](https://opensource.org/licenses/MIT)
+This work is licensed under [The MIT License](LICENSE)
