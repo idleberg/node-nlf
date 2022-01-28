@@ -13,8 +13,6 @@ Parser and stringifier for NSIS Language Files (.nlf)
 
 ## Usage
 
-Use ES6 imports or `require()` to include the module:
-
 ```js
 // ECMAScript Import
 import * as NLF from "@nsis/nlf";
