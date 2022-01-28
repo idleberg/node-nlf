@@ -21,6 +21,9 @@
     "import": "dist/index.js",
     "default": "dist/index.js"
   },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/idleberg/node-nlf.git"
