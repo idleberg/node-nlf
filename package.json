@@ -12,7 +12,8 @@
     "lint:ts": "eslint ./src --ignore-path .gitignore",
     "lint": "npm-run-all --parallel lint:*",
     "start": "rollup --watch --config",
-    "test": "ava ./test/default.js --verbose"
+    "test": "ava ./test/default.js --verbose",
+    "prepare": "husky install"
   },
   "main": "dist/index.js",
   "repository": {
@@ -24,43 +25,31 @@
     "nsis language file",
     "converter"
   ],
+  "dependencies": {
+    "json5": "^2.2.0"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.1.0",
-    "@types/node": "^14.14.22",
-    "@typescript-eslint/eslint-plugin": "^4.14.1",
-    "@typescript-eslint/parser": "^4.14.1",
-    "ava": "^3.15.0",
-    "eslint": "^7.18.0",
-    "eslint-plugin-json": "^2.1.2",
+    "@types/node": "^16.11.21",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
+    "ava": "^4.0.1",
+    "eslint": "^8.7.0",
+    "eslint-plugin-json": "^3.1.0",
     "esm": "^3.2.25",
     "glob": "^7.1.6",
-    "husky": "^4.3.8",
-    "jsonlint": "^1.6.3",
-    "lint-staged": "^10.5.3",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.3.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
-    "remark-cli": "^9.0.0",
-    "remark-preset-lint-recommended": "^5.0.0",
-    "remark-preset-prettier": "^0.4.0",
+    "remark-cli": "^10.0.1",
+    "remark-preset-lint-recommended": "^6.1.2",
+    "remark-preset-prettier": "^1.0.0",
     "rollup": "^2.38.0",
     "typescript": "^4.1.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "ava": {
-    "require": [
-      "esm"
-    ]
-  },
-  "dependencies": {
-    "json5": "^2.1.3"
-  },
   "lint-staged": {
-    "*.ts": "eslint --cache --fix",
-    "*.json": "jsonlint --quiet",
+    "*.(json|ts)": "eslint --cache --fix",
     "*.md": "prettier --write"
   }
 }

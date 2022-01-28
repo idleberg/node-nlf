@@ -4,9 +4,25 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var JSON5 = require('json5');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+function _interopNamespace(e) {
+    if (e && e.__esModule) return e;
+    var n = Object.create(null);
+    if (e) {
+        Object.keys(e).forEach(function (k) {
+            if (k !== 'default') {
+                var d = Object.getOwnPropertyDescriptor(e, k);
+                Object.defineProperty(n, k, d.get ? d : {
+                    enumerable: true,
+                    get: function () { return e[k]; }
+                });
+            }
+        });
+    }
+    n["default"] = e;
+    return Object.freeze(n);
+}
 
-var JSON5__default = /*#__PURE__*/_interopDefaultLegacy(JSON5);
+var JSON5__namespace = /*#__PURE__*/_interopNamespace(JSON5);
 
 var NLFStrings = {
     /**
@@ -184,7 +200,9 @@ var NLFStrings = {
 function getVersion(input) {
     var _a, _b;
     var groups = (_a = input.match(/(?<version>\d+)$/)) === null || _a === void 0 ? void 0 : _a.groups;
-    return ((_b = groups === null || groups === void 0 ? void 0 : groups.version) === null || _b === void 0 ? void 0 : _b.length) ? groups === null || groups === void 0 ? void 0 : groups.version : '6';
+    return ((_b = groups === null || groups === void 0 ? void 0 : groups.version) === null || _b === void 0 ? void 0 : _b.length)
+        ? groups === null || groups === void 0 ? void 0 : groups.version
+        : '6';
 }
 /**
  * Parses an NSIS language file string
@@ -211,7 +229,7 @@ function parse(input, options) {
     // get NLF version
     var version = getVersion(lines[0]);
     lines.map(function (line, index) {
-        var key = NLFStrings["v" + version][index];
+        var key = NLFStrings["v".concat(version)][index];
         if (typeof key !== 'undefined' && key.startsWith('^')) {
             // Language String
             key = key.replace('^', '');
@@ -266,37 +284,37 @@ function parse(input, options) {
 function stringify(input) {
     var output = [];
     var inputObj = typeof input === 'string'
-        ? JSON5__default['default'].parse(input)
+        ? JSON5__namespace.parse(input)
         : input;
     // get NLF version
     var version = getVersion(inputObj.header);
     output.push('# Header, don\'t edit', inputObj.header);
     output.push('# Language ID', String(inputObj.id));
-    if (typeof inputObj.font !== 'undefined' && NLFStrings["v" + version].includes('fontname')) {
+    if (typeof inputObj.font !== 'undefined' && NLFStrings["v".concat(version)].includes('fontname')) {
         output.push("# Font and size - dash (-) means default");
         if (inputObj.font.name) {
-            output.push("" + inputObj.font.name);
+            output.push("".concat(inputObj.font.name));
         }
         else {
             output.push('-');
         }
         if (inputObj.font.size) {
-            output.push("" + inputObj.font.size);
+            output.push("".concat(inputObj.font.size));
         }
         else {
             output.push('-');
         }
     }
-    if (NLFStrings["v" + version].includes('code_page')) {
+    if (NLFStrings["v".concat(version)].includes('code_page')) {
         output.push("# Codepage - dash (-) means ASCII code page");
         if (inputObj.code_page) {
-            output.push("" + inputObj.code_page);
+            output.push("".concat(inputObj.code_page));
         }
         else {
             output.push('-');
         }
     }
-    if (NLFStrings["v" + version].includes('rtl')) {
+    if (NLFStrings["v".concat(version)].includes('rtl')) {
         output.push("# RTL - anything else than RTL means LTR");
         if (inputObj.rtl) {
             output.push('RTL');
@@ -306,8 +324,8 @@ function stringify(input) {
         }
     }
     for (var key in inputObj.strings) {
-        if (NLFStrings["v" + version].includes("^" + key)) {
-            output.push("# ^" + key, inputObj.strings[key]);
+        if (NLFStrings["v".concat(version)].includes("^".concat(key))) {
+            output.push("# ^".concat(key), inputObj.strings[key]);
         }
     }
     return output.join('\n');
