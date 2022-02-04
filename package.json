@@ -23,8 +23,8 @@
   ],
   "type": "module",
   "export": {
-    "import": "dist/index.mjs",
-    "require": "dist/index.cjs"
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
