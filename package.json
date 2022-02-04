@@ -15,6 +15,12 @@
     "test": "ava --verbose",
     "prepare": "husky install"
   },
+  "files": [
+    "dist/",
+    "types/",
+    "LICENSE",
+    "README.md"
+  ],
   "type": "module",
   "export": {
     "import": "dist/index.mjs",

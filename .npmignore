@@ -3,7 +3,6 @@
 .editorconfig
 src/
 test/
-types/
 
 # Development
 .eslintcache
