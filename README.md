@@ -3,7 +3,6 @@
 [![npm](https://flat.badgen.net/npm/license/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
 [![npm](https://flat.badgen.net/npm/v/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
 [![CI](https://img.shields.io/github/workflow/status/idleberg/node-nlf/CI?style=flat-square)](https://github.com/idleberg/node-nlf/actions)
-[![David](https://flat.badgen.net/david/dev/idleberg/node-nlf)](https://david-dm.org/idleberg/node-nlf?type=dev)
 
 Parser and stringifier for NSIS Language Files (.nlf)
 
