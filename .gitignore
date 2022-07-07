@@ -6,6 +6,7 @@ vendor/
 package-lock.json
 yarn-error.log
 yarn.lock
+bin/
 
 # Development
 .eslintcache

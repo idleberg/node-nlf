@@ -11,20 +11,22 @@
     "lint:md": "remark . --quiet --frail --ignore-path .gitignore",
     "lint:ts": "eslint ./src --ignore-path .gitignore",
     "lint": "npm-run-all --parallel lint:*",
+    "prepack": "npm run build",
     "start": "rollup --watch --config",
     "test": "ava --verbose",
     "prepare": "husky install"
   },
   "files": [
-    "dist/",
     "types/",
     "LICENSE",
     "README.md"
   ],
   "type": "module",
   "exports": {
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
