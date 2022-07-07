@@ -1,5 +1,6 @@
 import JSON5 from 'json5';
 import NLFStrings from './mapping';
+import type NLF from '../types';
 
 /**
  * Get version from input string
@@ -18,8 +19,8 @@ function getVersion(input: string): string {
  * @param input - NLF string
  * @returns - NLF object
  */
-function parse(input: string, options: ParserOptions = {}): unknown | string {
-  const output: NSISLanguageObject = {
+function parse(input: string, options: NLF.ParserOptions = {}): unknown | string {
+  const output: NLF.NSISLanguageObject = {
     header: '',
     id: 0,
     font: {
@@ -101,10 +102,10 @@ function parse(input: string, options: ParserOptions = {}): unknown | string {
  * @param input - NLF object
  * @returns - NLF string
  */
-function stringify(input: string | NSISLanguageObject): string {
+function stringify(input: string | NLF.NSISLanguageObject): string {
   const output: string[] = [];
 
-  const inputObj: NSISLanguageObject = typeof input === 'string'
+  const inputObj: NLF.NSISLanguageObject = typeof input === 'string'
     ? JSON5.parse(input)
     : input;
 
