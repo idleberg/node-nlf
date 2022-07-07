@@ -1,5 +1,5 @@
 declare namespace NLF {
-    interface NSISLanguageObject {
+    interface NsisLanguageObject {
     code_page: null | number;
     font: FontSettings;
     header: string;

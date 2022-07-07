@@ -20,7 +20,7 @@ function getVersion(input: string): string {
  * @returns - NLF object
  */
 function parse(input: string, options: NLF.ParserOptions = {}): unknown | string {
-  const output: NLF.NSISLanguageObject = {
+  const output: NLF.NsisLanguageObject = {
     header: '',
     id: 0,
     font: {
@@ -102,10 +102,10 @@ function parse(input: string, options: NLF.ParserOptions = {}): unknown | string
  * @param input - NLF object
  * @returns - NLF string
  */
-function stringify(input: string | NLF.NSISLanguageObject): string {
+function stringify(input: string | NLF.NsisLanguageObject): string {
   const output: string[] = [];
 
-  const inputObj: NLF.NSISLanguageObject = typeof input === 'string'
+  const inputObj: NLF.NsisLanguageObject = typeof input === 'string'
     ? JSON5.parse(input)
     : input;
 
