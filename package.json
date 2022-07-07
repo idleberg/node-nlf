@@ -22,7 +22,7 @@
     "README.md"
   ],
   "type": "module",
-  "export": {
+  "exports": {
     "import": "./dist/index.mjs",
     "require": "./dist/index.cjs"
   },
