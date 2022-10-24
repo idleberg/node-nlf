@@ -117,6 +117,7 @@ function stringify(input: string | NLF.NsisLanguageObject): string {
 
   if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
     output.push(`# Font and size - dash (-) means default`);
+
     if (inputObj.font.name) {
       output.push(`${inputObj.font.name}`);
     } else {
