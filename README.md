@@ -2,7 +2,7 @@
 
 [![npm](https://flat.badgen.net/npm/license/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
 [![npm](https://flat.badgen.net/npm/v/@nsis/nlf)](https://www.npmjs.org/package/@nsis/nlf)
-[![CI](https://img.shields.io/github/workflow/status/idleberg/node-nlf/CI?style=flat-square)](https://github.com/idleberg/node-nlf/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/idleberg/node-nlf/default.yml?style=flat-square)](https://github.com/idleberg/node-nlf/actions)
 
 Parser and stringifier for NSIS Language Files (.nlf)
 
@@ -25,8 +25,8 @@ Example usage in script:
 ```js
 // Read an NSIS Language File
 const languageFile = fs.readFileSync(
-  "Contrib/Language files/English.nlf",
-  "utf8"
+	"Contrib/Language files/English.nlf",
+	"utf8"
 );
 
 const languageObj = NLF.parse(languageFile);
