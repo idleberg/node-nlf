@@ -11,6 +11,9 @@ bin/
 # Development
 .eslintcache
 
+# Build
+dist/
+
 # Project specific
 *.exe
 *.map
