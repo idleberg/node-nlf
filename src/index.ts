@@ -1,10 +1,10 @@
 import JSON5 from 'json5';
 import NLFStrings from './mapping';
-import type NLF from '../types';
-
+import type { nlf as NLF } from '../types';
 /**
  * Get version from input string
- * @param input
+ * @param {string} input
+ * @returns {string}
  */
 function getVersion(input: string): string {
   const groups = input.match(/(?<version>\d+)$/)?.groups;
@@ -16,10 +16,10 @@ function getVersion(input: string): string {
 
 /**
  * Parses an NSIS language file string
- * @param input - NLF string
- * @returns - NLF object
+ * @param input
+ * @returns {NLF.NsisLanguageObject | string}
  */
-function parse(input: string, options: NLF.ParserOptions = {}): unknown | string {
+export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisLanguageObject | string {
   const output: NLF.NsisLanguageObject = {
     header: '',
     id: 0,
@@ -55,7 +55,7 @@ function parse(input: string, options: NLF.ParserOptions = {}): unknown | string
         case 'code_page':
           output[key] = (lines[index] === '-')
             ? null
-            : parseInt(lines[index]);
+            : parseInt(lines[index], 10);
 
           break;
         case 'font':
@@ -68,7 +68,7 @@ function parse(input: string, options: NLF.ParserOptions = {}): unknown | string
         case 'fontsize':
           output.font.size = (lines[index] === '-')
             ? null
-            : parseInt(lines[index]);
+            : parseInt(lines[index], 10);
 
           break;
         case 'rtl':
@@ -99,10 +99,10 @@ function parse(input: string, options: NLF.ParserOptions = {}): unknown | string
 
 /**
  * Stringifies an NSIS language file object
- * @param input - NLF object
- * @returns - NLF string
+ * @param {string | NLF.NsisLanguageObject} input
+ * @returns {string}
  */
-function stringify(input: string | NLF.NsisLanguageObject): string {
+export function stringify(input: string | NLF.NsisLanguageObject): string {
   const output: string[] = [];
 
   const inputObj: NLF.NsisLanguageObject = typeof input === 'string'
@@ -159,5 +159,3 @@ function stringify(input: string | NLF.NsisLanguageObject): string {
 
   return output.join('\n');
 }
-
-export { parse, stringify };

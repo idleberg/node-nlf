@@ -1,5 +1,8 @@
-declare namespace NLF {
-    interface NsisLanguageObject {
+export declare namespace nlf {
+	function parse(input: string, options: NLF.ParserOptions = {}): NsisLanguageObject | string;
+	function stringify(input: string | NsisLanguageObject): string;
+
+	interface NsisLanguageObject {
     code_page: null | number;
     font: FontSettings;
     header: string;
@@ -110,5 +113,3 @@ declare namespace NLF {
     stringify?: boolean;
   }
 }
-
-export default NLF;
