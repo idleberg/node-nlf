@@ -12,9 +12,9 @@
     "lint:ts": "eslint ./src --ignore-path .gitignore",
     "lint": "npm-run-all --parallel lint:*",
     "prepack": "npm run build",
+    "prepare": "husky install",
     "start": "rollup --watch --config",
-    "test": "ava --verbose",
-    "prepare": "husky install"
+    "test": "uvu tests"
   },
   "files": [
     "types/",
