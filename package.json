@@ -17,6 +17,7 @@
     "test": "uvu tests"
   },
   "files": [
+    "dist/",
     "types/",
     "LICENSE",
     "README.md"
