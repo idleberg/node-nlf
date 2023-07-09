@@ -1,6 +1,5 @@
 import JSON5 from 'json5';
 import NLFStrings from './mapping';
-import type { nlf as NLF } from '../types';
 /**
  * Get version from input string
  * @param {string} input

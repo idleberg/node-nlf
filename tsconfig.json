@@ -29,7 +29,9 @@
     "allowJs": true,
     "checkJs": true,
 
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "declaration": true,
+    "outDir": "dist"
   },
   /**
    * Use global.d.ts instead of compilerOptions.types

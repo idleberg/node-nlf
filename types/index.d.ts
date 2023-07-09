@@ -1,5 +1,5 @@
-export declare namespace nlf {
-	function parse(input: string, options: NLF.ParserOptions = {}): NsisLanguageObject | string;
+declare namespace NLF {
+	function parse(input: string, options: ParserOptions): NsisLanguageObject | string;
 	function stringify(input: string | NsisLanguageObject): string;
 
 	interface NsisLanguageObject {
@@ -113,3 +113,6 @@ export declare namespace nlf {
     stringify?: boolean;
   }
 }
+
+export = NLF;
+export as namespace NLF;
