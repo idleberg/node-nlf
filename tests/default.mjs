@@ -8,7 +8,7 @@ import JSON5 from 'json5';
 
 const files = await glob(resolve(process.cwd(), 'tests/fixtures/*.nlf'));
 
-await Promise.all(files.map(file => {
+files.map(file => {
   const fileDir = dirname(file);
   const fileBase = basename(file, '.nlf');
 
@@ -40,6 +40,6 @@ await Promise.all(files.map(file => {
     assert.is(actual, expected);
   });
 
-}));
+});
 
 test.run();
