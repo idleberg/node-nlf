@@ -1,8 +1,5 @@
 declare namespace NLF {
-	function parse(input: string, options: ParserOptions): NsisLanguageObject | string;
-	function stringify(input: string | NsisLanguageObject): string;
-
-	interface NsisLanguageObject {
+	type NsisLanguageObject = {
     code_page: null | number;
     font: FontSettings;
     header: string;
@@ -11,7 +8,7 @@ declare namespace NLF {
     strings: LanguageStrings;
   }
 
-  interface LanguageStrings {
+  type LanguageStrings = {
     AcceptBtn?: string;
     AgreeBtn?: string;
     BackBtn?: string;
@@ -103,12 +100,12 @@ declare namespace NLF {
     Unregistering?: string;
   }
 
-  interface FontSettings {
+  type FontSettings = {
     name: null | string;
     size: null | number;
   }
 
-  interface ParserOptions {
+  type ParserOptions = {
     minify?: boolean;
     stringify?: boolean;
   }

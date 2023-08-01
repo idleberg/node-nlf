@@ -18,7 +18,7 @@ function getVersion(input: string): string {
  * @param input
  * @returns {NLF.NsisLanguageObject | string}
  */
-export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisLanguageObject | string {
+export function parse(input: string, options?: NLF.ParserOptions): NLF.NsisLanguageObject | string {
   const output: NLF.NsisLanguageObject = {
     header: '',
     id: 0,
@@ -85,7 +85,7 @@ export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisL
     }
   });
 
-  if (options.stringify === true) {
+  if (options?.stringify) {
     const indentation: number = (options.minify === true)
       ? 0
       : 2;
