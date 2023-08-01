@@ -1,8 +1,25 @@
 name: CI
 
 on:
-- push
-- pull_request
+  push:
+    paths:
+    - '.github/**'
+    - 'src/**'
+    - 'tests/**'
+    - '.eslintrc.cjs'
+    - 'package.json'
+    - 'pnpm-lock.yaml'
+    - 'tsconfig.json'
+  pull_request:
+    paths:
+    - '.github/**'
+    - 'src/**'
+    - 'tests/**'
+    - '.eslintrc.cjs'
+    - 'package.json'
+    - 'pnpm-lock.yaml'
+    - 'tsconfig.json'
+  workflow_dispatch:
 
 jobs:
   default:
