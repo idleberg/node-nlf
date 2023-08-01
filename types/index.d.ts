@@ -1,4 +1,7 @@
 declare namespace NLF {
+	function parse(input: string, options: ParserOptions): NsisLanguageObject | string;
+	function stringify(input: string | NsisLanguageObject): string;
+
 	type NsisLanguageObject = {
     code_page: null | number;
     font: FontSettings;
