@@ -63,7 +63,7 @@ Converts an NSIS Language File object or JSON string to an `.nlf` string
 
 Type: `"crlf" | "lf"`
 
-Selects the default end of line sequence. When not specified, it defaults to `"crlf"` on Windows and `"lf"` everywhere else.
+Selects the default end of line sequence. When not specified, it defaults to `"crlf"` on Windows and `"lf"` elsewhere.
 
 ## Related
 
