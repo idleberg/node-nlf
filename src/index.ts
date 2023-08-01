@@ -19,10 +19,20 @@ function getVersion(input: string): string {
  * Determines default line-breaks depending on operating system
  * @returns {NLF.EndOfLine}
  */
-function getEOL(): NLF.EndOfLine {
+function getEOL(options): NLF.EndOfLine {
+	switch (true) {
+		case options?.eol === 'crlf':
+			return '\r\n';
+
+		case options?.eol === 'lf':
+			return '\n';
+
+		default:
+			break;
+	}
 	return platform() === 'win32'
-		? 'crlf'
-		: 'lf';
+		? '\r\n'
+		: '\n';
 }
 
 /**
@@ -170,9 +180,7 @@ export function stringify(input: string | NLF.NsisLanguageObject, options?: NLF.
 		}
 	}
 
-	const endOfLine = options?.eol
-		? options.eol
-		: getEOL();
+	const endOfLine = getEOL(options);
 
 	return output.join(endOfLine);
 }

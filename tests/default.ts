@@ -17,9 +17,7 @@ files.map(file => {
     const jsonPath = resolve(fileDir, fileBase + '.json');
     const jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
 
-		const nlfString = NLF.stringify(JSON5.parse(jsonFile), {
-			eol: 'lf'
-		});
+		const nlfString = NLF.stringify(JSON5.parse(jsonFile));
 
     // Remove comments and normalize line endings
     const actual = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
@@ -33,9 +31,7 @@ files.map(file => {
     const jsonPath = resolve(fileDir, fileBase + '.json');
     const jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
 
-    const nlfString = NLF.stringify(jsonFile, {
-			eol: 'lf'
-		});
+    const nlfString = NLF.stringify(jsonFile);
 
     // Remove comments and normalize line endings
     const actual = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
