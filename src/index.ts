@@ -184,3 +184,8 @@ export function stringify(input: string | NLF.NsisLanguageObject, options?: NLF.
 
 	return output.join(endOfLine);
 }
+
+export default {
+	parse,
+	stringify
+};
