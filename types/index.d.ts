@@ -105,9 +105,15 @@ declare namespace NLF {
     size: null | number;
   }
 
+	type EndOfLine = 'crlf' | 'lf';
+
   type ParserOptions = {
     minify?: boolean;
     stringify?: boolean;
+  }
+
+  type StringifierOptions = {
+    eol?: EndOfLine;
   }
 }
 

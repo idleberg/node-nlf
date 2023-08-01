@@ -59,6 +59,12 @@ Usage: `stringify(Object|string)`
 
 Converts an NSIS Language File object or JSON string to an `.nlf` string
 
+##### options.eol
+
+Type: `"crlf" | "lf"`
+
+Selects the default end of line sequence. When not specified, it defaults to `"crlf"` on Windows and `"lf"` everywhere else.
+
 ## Related
 
 - [nlf-cli](https://www.npmjs.org/package/@nsis/nlf-cli) - command-line tool to convert NLF files
