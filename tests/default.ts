@@ -1,12 +1,12 @@
 import { basename, dirname, resolve } from 'node:path';
-import { glob } from 'glob';
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as NLF from '../dist/index.mjs';
+import * as NLF from '../src/index';
 import fs from 'node:fs';
 import JSON5 from 'json5';
+import { globSync } from 'glob';
 
-const files = await glob(resolve(process.cwd(), 'tests/fixtures/*.nlf'));
+const files = globSync(resolve(process.cwd(), 'tests/fixtures/*.nlf'));
 
 files.map(file => {
   const fileDir = dirname(file);
@@ -17,7 +17,9 @@ files.map(file => {
     const jsonPath = resolve(fileDir, fileBase + '.json');
     const jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
 
-    const nlfString = NLF.stringify(JSON5.parse(jsonFile));
+		const nlfString = NLF.stringify(JSON5.parse(jsonFile), {
+			eol: 'lf'
+		});
 
     // Remove comments and normalize line endings
     const actual = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
@@ -31,7 +33,9 @@ files.map(file => {
     const jsonPath = resolve(fileDir, fileBase + '.json');
     const jsonFile = await fs.promises.readFile(jsonPath, 'utf8');
 
-    const nlfString = NLF.stringify(jsonFile);
+    const nlfString = NLF.stringify(jsonFile, {
+			eol: 'lf'
+		});
 
     // Remove comments and normalize line endings
     const actual = nlfString.replace(/^#.*(\r?\n|$)/mg, '').replace(/\r\n/g, '\n');
