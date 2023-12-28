@@ -8,16 +8,12 @@ Parser and stringifier for NSIS Language Files (.nlf)
 
 ## Installation
 
-`yarn add @nsis/nlf || npm install @nsis/nlf`
+` npm install @nsis/nlf`
 
 ## Usage
 
 ```js
-// ECMAScript Import
 import * as NLF from "@nsis/nlf";
-
-// CommonJS Require
-const NLF = require("@nsis/nlf");
 ```
 
 Example usage in script:
