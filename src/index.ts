@@ -41,7 +41,7 @@ function getEOL(options): NLF.EndOfLine {
  * @param {NLF.ParserOptions} options
  * @returns {NLF.NsisLanguageObject | string}
  */
-export function parse(input: string, options?: NLF.ParserOptions): NLF.NsisLanguageObject | string {
+export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisLanguageObject | string {
 	const output: NLF.NsisLanguageObject = {
 		header: '',
 		id: 0,
@@ -125,7 +125,7 @@ export function parse(input: string, options?: NLF.ParserOptions): NLF.NsisLangu
  * @param {NLF.StringifierOptions} options
  * @returns {string}
  */
-export function stringify(input: string | NLF.NsisLanguageObject, options?: NLF.StringifierOptions): string {
+export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.StringifierOptions = {}): string {
 	const output: string[] = [];
 
 	const inputObj: NLF.NsisLanguageObject = typeof input === 'string'
