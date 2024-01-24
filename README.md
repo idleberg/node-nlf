@@ -64,7 +64,7 @@ Selects the default end of line sequence. When not specified, it defaults to `"c
 ## Related
 
 - [nlf-cli](https://www.npmjs.org/package/@nsis/nlf-cli) - command-line tool to convert NLF files
-- [vite-plugin-nlf](https://www.npmjs.org/package/@nsis/vite-plugin-nlf) - Vite plugin for NLF files
+- [vite-plugin-nlf](https://www.npmjs.org/package/@nsis/vite-plugin-nlf) - Vite plugin to load NSIS language files
 
 ## License
 
