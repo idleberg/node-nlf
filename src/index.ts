@@ -11,7 +11,7 @@ function getVersion(input: string): string {
 	const groups = input.match(/(?<version>\d+)$/)?.groups;
 
 	return groups?.version?.length
-		? groups?.version
+		? groups.version
 		: '6';
 }
 
