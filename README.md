@@ -51,7 +51,7 @@ Minifies a stringified object, requires `options.stringify` to be `true`
 
 #### stringify
 
-Usage: `stringify(Object|string)`
+Usage: `stringify(Object|string, options)`
 
 Converts an NSIS Language File object or JSON string to an `.nlf` string
 
