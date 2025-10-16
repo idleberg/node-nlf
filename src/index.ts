@@ -1,6 +1,6 @@
 import { platform } from 'node:os';
 import JSON5 from 'json5';
-import NLFStrings from './mapping';
+import NLFStrings from './mapping.ts';
 
 /**
  * Get version from input string
@@ -17,7 +17,7 @@ function getVersion(input: string): string {
  * Determines default line-breaks depending on operating system
  * @returns {NLF.EndOfLine}
  */
-function getEOL(options): NLF.EndOfLine {
+function getEOL(options: NLF.StringifierOptions): NLF.EndOfLine {
 	switch (true) {
 		case options?.eol === 'crlf':
 			return '\r\n';
@@ -164,8 +164,3 @@ export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.S
 
 	return output.join(endOfLine);
 }
-
-export default {
-	parse,
-	stringify,
-};
