@@ -10,6 +10,6 @@ export default defineConfig((options) => {
 		entry: ['src/index.ts'],
 		format: 'esm',
 		minify: isProduction,
-		outDir: 'bin',
+		outDir: 'dist',
 	};
 });
