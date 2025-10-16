@@ -45,6 +45,7 @@
 		"@idleberg/configs": "^0.3.1",
 		"@types/node": "^24.6.2",
 		"concurrently": "^9.2.1",
+		"glob": "^11.0.3",
 		"knip": "^5.65.0",
 		"np": "^10.2.0",
 		"publint": "^0.3.14",
