@@ -10,9 +10,7 @@ import NLFStrings from './mapping';
 function getVersion(input: string): string {
 	const groups = input.match(/(?<version>\d+)$/)?.groups;
 
-	return groups?.version?.length
-		? groups?.version
-		: '6';
+	return groups?.version?.length ? groups?.version : '6';
 }
 
 /**
@@ -30,9 +28,7 @@ function getEOL(options): NLF.EndOfLine {
 		default:
 			break;
 	}
-	return platform() === 'win32'
-		? '\r\n'
-		: '\n';
+	return platform() === 'win32' ? '\r\n' : '\n';
 }
 
 /**
@@ -47,7 +43,7 @@ export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisL
 		id: 0,
 		font: {
 			name: null,
-			size: null
+			size: null,
 		},
 		code_page: null,
 		rtl: false,
@@ -55,63 +51,49 @@ export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisL
 	};
 
 	// remove all comments
-	input = input.trim().replace(/^#.*(\r?\n|$)/mg, '');
+	const trimmedInput = input.trim().replace(/^#.*(\r?\n|$)/gm, '');
 
 	// split into lines
-	const lines: Array<string> = input.split(/\r?\n/);
+	const lines: Array<string> = trimmedInput.split(/\r?\n/);
 
 	// get NLF version
 	const version = getVersion(lines[0]);
 
-	lines.map((line, index) => {
+	for (const [index, line] of lines.entries()) {
 		let key = NLFStrings[`v${version}`][index];
 
-		if (typeof key !== 'undefined' && key.startsWith('^')) {
+		if (key?.startsWith('^')) {
 			// Language String
 			key = key.replace('^', '');
-			output.strings[key] = lines[index];
+			output.strings[key] = line;
 		} else {
 			// Meta Data
 			switch (key) {
 				case 'id':
 				case 'code_page':
-					output[key] = (lines[index] === '-')
-						? null
-						: parseInt(lines[index], 10);
-
+					output[key] = line === '-' ? null : Number.parseInt(line, 10);
 					break;
 				case 'font':
 				case 'fontname':
-					output.font.name = (lines[index] === '-')
-						? null
-						: lines[index];
-
+					output.font.name = line === '-' ? null : line;
 					break;
 				case 'fontsize':
-					output.font.size = (lines[index] === '-')
-						? null
-						: parseInt(lines[index], 10);
-
+					output.font.size = line === '-' ? null : Number.parseInt(line, 10);
 					break;
 				case 'rtl':
-					output[key] = (lines[index].toUpperCase() === 'RTL')
-						? true
-						: false;
-
+					output[key] = line.toUpperCase() === 'RTL';
 					break;
 				default:
 					if (typeof key !== 'undefined') {
-						output[key] = lines[index];
+						output[key] = line;
 					}
 					break;
 			}
 		}
-	});
+	}
 
 	if (options?.stringify) {
-		const indentation: number = (options.minify === true)
-			? 0
-			: 2;
+		const indentation: number = options.minify === true ? 0 : 2;
 
 		return JSON.stringify(output, null, indentation);
 	}
@@ -128,18 +110,16 @@ export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisL
 export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.StringifierOptions = {}): string {
 	const output: string[] = [];
 
-	const inputObj: NLF.NsisLanguageObject = typeof input === 'string'
-		? JSON5.parse(input)
-		: input;
+	const inputObj: NLF.NsisLanguageObject = typeof input === 'string' ? JSON5.parse(input) : input;
 
 	// get NLF version
 	const version = getVersion(inputObj.header);
 
-	output.push('# Header, don\'t edit', inputObj.header);
+	output.push("# Header, don't edit", inputObj.header);
 	output.push('# Language ID', String(inputObj.id));
 
 	if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
-		output.push(`# Font and size - dash (-) means default`);
+		output.push('# Font and size - dash (-) means default');
 
 		if (inputObj.font.name) {
 			output.push(`${inputObj.font.name}`);
@@ -155,7 +135,7 @@ export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.S
 	}
 
 	if (NLFStrings[`v${version}`].includes('code_page')) {
-		output.push(`# Codepage - dash (-) means ASCII code page`);
+		output.push('# Codepage - dash (-) means ASCII code page');
 
 		if (inputObj.code_page) {
 			output.push(`${inputObj.code_page}`);
@@ -165,7 +145,7 @@ export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.S
 	}
 
 	if (NLFStrings[`v${version}`].includes('rtl')) {
-		output.push(`# RTL - anything else than RTL means LTR`);
+		output.push('# RTL - anything else than RTL means LTR');
 
 		if (inputObj.rtl) {
 			output.push('RTL');
@@ -187,5 +167,5 @@ export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.S
 
 export default {
 	parse,
-	stringify
+	stringify,
 };
