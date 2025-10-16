@@ -28,26 +28,26 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
       - name: Cache pnpm modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
           run_install: |
             - recursive: true
             - args: [--frozen-lockfile, --strict-peer-dependencies]
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
 
