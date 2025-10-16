@@ -33,27 +33,15 @@ const languageNew = NLF.stringify(languageObj);
 
 #### parse
 
-Usage: `parse(string, options)`
+Usage: `parse(string)`
 
-Parses an NSIS Language File, constructing an object or JSON string that's easy to query
-
-##### options.stringify
-
-Type: `boolean`
-
-Return a stringified object
-
-##### options.minify
-
-Type: `boolean`
-
-Minifies a stringified object, requires `options.stringify` to be `true`
+Parses an NSIS Language File, constructing an object.
 
 #### stringify
 
 Usage: `stringify(Object|string, options)`
 
-Converts an NSIS Language File object or JSON string to an `.nlf` string
+Converts an NSIS Language File object or JSON string to an `.nlf` string.
 
 ##### options.eol
 
@@ -68,4 +56,4 @@ Selects the default end of line sequence. When not specified, it defaults to `"c
 
 ## License
 
-This work is licensed under [The MIT License](LICENSE)
+This work is licensed under [The MIT License](LICENSE).

@@ -1,6 +1,6 @@
 import JSON5 from 'json5';
 import NLFStrings from './mapping.ts';
-import type { NsisLanguageObject, ParserOptions, StringifierOptions } from './types.js';
+import type { NsisLanguageObject, StringifierOptions } from './types.js';
 import { getEOL, getVersion, getVersionKey, validateInput, valueOrDash } from './utils.ts';
 
 /**
@@ -10,9 +10,6 @@ import { getEOL, getVersion, getVersionKey, validateInput, valueOrDash } from '.
  * Comments (lines starting with #) are automatically stripped during parsing.
  *
  * @param input - The NLF file content as a string
- * @param options - Parser options
- * @param options.stringify - If true, returns JSON string instead of object
- * @param options.minify - If true with stringify, returns minified JSON (no indentation)
  * @returns Parsed language object, or JSON string if stringify option is true
  * @throws {Error} If input is empty, invalid, or uses an unsupported NLF version
  *
@@ -23,7 +20,7 @@ import { getEOL, getVersion, getVersionKey, validateInput, valueOrDash } from '.
  * console.log(parsed.id); // 1033
  * ```
  */
-export function parse(input: string, options: ParserOptions = {}): NsisLanguageObject | string {
+export function parse(input: string): NsisLanguageObject | string {
 	validateInput(input);
 
 	const output: NsisLanguageObject = {
@@ -93,12 +90,6 @@ export function parse(input: string, options: ParserOptions = {}): NsisLanguageO
 					break;
 			}
 		}
-	}
-
-	if (options?.stringify) {
-		const indentation: number = options.minify === true ? 0 : 2;
-
-		return JSON.stringify(output, null, indentation);
 	}
 
 	return output;

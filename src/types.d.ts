@@ -108,11 +108,6 @@ export type FontSettings = {
 
 export type EndOfLine = '\r\n' | '\n';
 
-export type ParserOptions = {
-	minify?: boolean;
-	stringify?: boolean;
-};
-
 export type StringifierOptions = {
 	eol?: 'crlf' | 'lf';
 };
