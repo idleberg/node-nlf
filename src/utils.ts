@@ -1,4 +1,5 @@
 import { platform } from 'node:os';
+import type { EndOfLine, NsisLanguageObject, StringifierOptions } from './types.js';
 
 const isWindows = platform() === 'win32';
 
@@ -31,7 +32,7 @@ export function getVersionKey(version: string): 'v2' | 'v6' {
  * @param input - The input to validate
  * @throws {Error} If input is empty or whitespace-only
  */
-export function validateInput(input: string | NLF.NsisLanguageObject): void {
+export function validateInput(input: string | NsisLanguageObject): void {
 	if (!input) {
 		throw new Error('input is required and cannot be empty');
 	}
@@ -58,7 +59,7 @@ export function valueOrDash(value: string | number | null | undefined): string {
  * @param options - Stringifier options that may specify EOL preference
  * @returns The end-of-line character sequence
  */
-export function getEOL(options: NLF.StringifierOptions): NLF.EndOfLine {
+export function getEOL(options: StringifierOptions): EndOfLine {
 	if (options?.eol === 'crlf') {
 		return '\r\n';
 	}

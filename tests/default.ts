@@ -4,7 +4,7 @@ import { globSync } from 'glob';
 import JSON5 from 'json5';
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
-import * as NLF from '../src/index';
+import * as NLF from '../src/index.ts';
 
 const files = globSync(resolve(process.cwd(), 'tests/fixtures/*.nlf'));
 

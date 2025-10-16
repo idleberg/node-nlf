@@ -1,5 +1,6 @@
 import JSON5 from 'json5';
 import NLFStrings from './mapping.ts';
+import type { NsisLanguageObject, ParserOptions, StringifierOptions } from './types.js';
 import { getEOL, getVersion, getVersionKey, validateInput, valueOrDash } from './utils.ts';
 
 /**
@@ -22,10 +23,10 @@ import { getEOL, getVersion, getVersionKey, validateInput, valueOrDash } from '.
  * console.log(parsed.id); // 1033
  * ```
  */
-export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisLanguageObject | string {
+export function parse(input: string, options: ParserOptions = {}): NsisLanguageObject | string {
 	validateInput(input);
 
-	const output: NLF.NsisLanguageObject = {
+	const output: NsisLanguageObject = {
 		header: '',
 		id: 0,
 		font: {
@@ -128,10 +129,10 @@ export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisL
  * const nlf = stringify(langObj, { eol: 'lf' });
  * ```
  */
-export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.StringifierOptions = {}): string {
+export function stringify(input: string | NsisLanguageObject, options: StringifierOptions = {}): string {
 	validateInput(input);
 
-	let inputObj: NLF.NsisLanguageObject;
+	let inputObj: NsisLanguageObject;
 
 	if (typeof input === 'string') {
 		try {
