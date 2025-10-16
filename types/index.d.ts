@@ -3,9 +3,10 @@ declare namespace NLF {
 		code_page: null | number;
 		font: FontSettings;
 		header: string;
-		id: number;
+		id: number | null;
 		rtl: boolean;
 		strings: LanguageStrings;
+		[key: string]: unknown;
 	};
 
 	type LanguageStrings = {
@@ -98,6 +99,7 @@ declare namespace NLF {
 		UnLicenseTextCB?: string;
 		UnLicenseTextRB?: string;
 		Unregistering?: string;
+		[key: string]: string | undefined;
 	};
 
 	type FontSettings = {

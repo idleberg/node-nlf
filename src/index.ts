@@ -1,43 +1,30 @@
-import { platform } from 'node:os';
 import JSON5 from 'json5';
 import NLFStrings from './mapping.ts';
+import { getEOL, getVersion, getVersionKey, validateInput, valueOrDash } from './utils.ts';
 
 /**
- * Get version from input string
- * @param {string} input
- * @returns {string}
- */
-function getVersion(input: string): string {
-	const groups = input.match(/(?<version>\d+)$/)?.groups;
-
-	return groups?.version?.length ? groups?.version : '6';
-}
-
-/**
- * Determines default line-breaks depending on operating system
- * @returns {NLF.EndOfLine}
- */
-function getEOL(options: NLF.StringifierOptions): NLF.EndOfLine {
-	switch (true) {
-		case options?.eol === 'crlf':
-			return '\r\n';
-
-		case options?.eol === 'lf':
-			return '\n';
-
-		default:
-			break;
-	}
-	return platform() === 'win32' ? '\r\n' : '\n';
-}
-
-/**
- * Parses an NSIS language file string
- * @param {string} input
- * @param {NLF.ParserOptions} options
- * @returns {NLF.NsisLanguageObject | string}
+ * Parses an NSIS language file (NLF) string into a structured object.
+ *
+ * Supports both NLF v2 (NSIS 2.0 beta 3 and earlier) and v6 (NSIS 2.0 beta 4+).
+ * Comments (lines starting with #) are automatically stripped during parsing.
+ *
+ * @param input - The NLF file content as a string
+ * @param options - Parser options
+ * @param options.stringify - If true, returns JSON string instead of object
+ * @param options.minify - If true with stringify, returns minified JSON (no indentation)
+ * @returns Parsed language object, or JSON string if stringify option is true
+ * @throws {Error} If input is empty, invalid, or uses an unsupported NLF version
+ *
+ * @example
+ * ```ts
+ * const nlfContent = '# NLF v6\n1033\n...';
+ * const parsed = parse(nlfContent);
+ * console.log(parsed.id); // 1033
+ * ```
  */
 export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisLanguageObject | string {
+	validateInput(input);
+
 	const output: NLF.NsisLanguageObject = {
 		header: '',
 		id: 0,
@@ -56,11 +43,26 @@ export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisL
 	// split into lines
 	const lines: Array<string> = trimmedInput.split(/\r?\n/);
 
+	if (lines.length === 0) {
+		throw new Error('Input contains no valid lines');
+	}
+
 	// get NLF version
-	const version = getVersion(lines[0]);
+	const firstLine = lines[0];
+	if (!firstLine) {
+		throw new Error('First line is missing or empty');
+	}
+
+	const version = getVersion(firstLine);
+	const versionKey = getVersionKey(version);
+	const mapping = NLFStrings[versionKey];
+
+	if (!mapping) {
+		throw new Error(`Unsupported NLF version: ${version}`);
+	}
 
 	for (const [index, line] of lines.entries()) {
-		let key = NLFStrings[`v${version}`][index];
+		let key = mapping[index];
 
 		if (key?.startsWith('^')) {
 			// Language String
@@ -102,61 +104,87 @@ export function parse(input: string, options: NLF.ParserOptions = {}): NLF.NsisL
 }
 
 /**
- * Stringifies an NSIS language file object
- * @param {string | NLF.NsisLanguageObject} input
- * @param {NLF.StringifierOptions} options
- * @returns {string}
+ * Converts a language object or JSON string into an NSIS language file (NLF) format.
+ *
+ * Supports both NLF v2 and v6 formats based on the header version.
+ * String ordering is maintained according to the NLF specification for the detected version.
+ *
+ * @param input - Language object or JSON5 string to convert
+ * @param options - Stringifier options
+ * @param options.eol - Line ending style ('crlf' for Windows, 'lf' for Unix, defaults to platform)
+ * @returns NLF formatted string
+ * @throws {Error} If input is empty, invalid, cannot be parsed, or uses an unsupported NLF version
+ *
+ * @example
+ * ```ts
+ * const langObj = {
+ *   header: 'NLF v6',
+ *   id: 1033,
+ *   font: { name: 'Arial', size: 8 },
+ *   code_page: 1252,
+ *   rtl: false,
+ *   strings: { Branding: 'MyApp Installer' }
+ * };
+ * const nlf = stringify(langObj, { eol: 'lf' });
+ * ```
  */
 export function stringify(input: string | NLF.NsisLanguageObject, options: NLF.StringifierOptions = {}): string {
-	const output: string[] = [];
+	validateInput(input);
 
-	const inputObj: NLF.NsisLanguageObject = typeof input === 'string' ? JSON5.parse(input) : input;
+	let inputObj: NLF.NsisLanguageObject;
+
+	if (typeof input === 'string') {
+		try {
+			inputObj = JSON5.parse(input);
+		} catch (error) {
+			throw new Error(`Failed to parse input JSON: ${error instanceof Error ? error.message : String(error)}`);
+		}
+	} else {
+		inputObj = input;
+	}
+
+	if (!inputObj.header) {
+		throw new Error('Input object must have a header property');
+	}
+
+	const output: string[] = [];
 
 	// get NLF version
 	const version = getVersion(inputObj.header);
+	const versionKey = getVersionKey(version);
+	const mapping = NLFStrings[versionKey];
+
+	if (!mapping) {
+		throw new Error(`Unsupported NLF version: ${version}`);
+	}
 
 	output.push("# Header, don't edit", inputObj.header);
-	output.push('# Language ID', String(inputObj.id));
+	output.push('# Language ID', valueOrDash(inputObj.id));
 
-	if (typeof inputObj.font !== 'undefined' && NLFStrings[`v${version}`].includes('fontname')) {
+	if (typeof inputObj.font !== 'undefined' && mapping.includes('fontname')) {
 		output.push('# Font and size - dash (-) means default');
-
-		if (inputObj.font.name) {
-			output.push(`${inputObj.font.name}`);
-		} else {
-			output.push('-');
-		}
-
-		if (inputObj.font.size) {
-			output.push(`${inputObj.font.size}`);
-		} else {
-			output.push('-');
-		}
+		output.push(valueOrDash(inputObj.font.name));
+		output.push(valueOrDash(inputObj.font.size));
 	}
 
-	if (NLFStrings[`v${version}`].includes('code_page')) {
+	if (mapping.includes('code_page')) {
 		output.push('# Codepage - dash (-) means ASCII code page');
-
-		if (inputObj.code_page) {
-			output.push(`${inputObj.code_page}`);
-		} else {
-			output.push('-');
-		}
+		output.push(valueOrDash(inputObj.code_page));
 	}
 
-	if (NLFStrings[`v${version}`].includes('rtl')) {
+	if (mapping.includes('rtl')) {
 		output.push('# RTL - anything else than RTL means LTR');
-
-		if (inputObj.rtl) {
-			output.push('RTL');
-		} else {
-			output.push('-');
-		}
+		output.push(inputObj.rtl ? 'RTL' : '-');
 	}
 
-	for (const key in inputObj.strings) {
-		if (NLFStrings[`v${version}`].includes(`^${key}`)) {
-			output.push(`# ^${key}`, inputObj.strings[key]);
+	// Maintain proper ordering by iterating through mapping instead of object keys
+	for (const mappingKey of mapping) {
+		if (mappingKey.startsWith('^')) {
+			const key = mappingKey.substring(1);
+			const value = inputObj.strings[key];
+			if (value !== undefined) {
+				output.push(`# ${mappingKey}`, value);
+			}
 		}
 	}
 
