@@ -8,7 +8,7 @@
 		"dev": "tsdown --watch",
 		"lint": "concurrently --prefix-colors blue,green,magenta npm:lint:*",
 		"lint:biome": "biome check",
-		"lint:knip": "knip --production",
+		"lint:knip": "knip --cache --production",
 		"lint:publint": "publint",
 		"prepack": "npm run build",
 		"prepare": "lefthook install",
